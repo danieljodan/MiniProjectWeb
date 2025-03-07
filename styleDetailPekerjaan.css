@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+html {
+    font-family: 'Poppins';
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1% 5%;
+    background-color: antiquewhite;
+    margin: 0% 0% 1% 0%;
+}
+
+.nav-menu {
+    list-style-type: none;
+    display: flex;
+    gap: 25em;
+}
+
+.Lamaran {
+    margin: 10%;
+}
+
+.Lamaran a {
+    border-radius: 10px;
+    background-color: #7d3cff;
+    padding: 10px;
+    color: white;
+}
+
+
+.ProfilPerusahaan, .Lamaran, .Tips, .DeskripsiPekerjaan{
+    margin: 0% 5%;
+}
+
+footer {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 2% 1%;
+    text-align: center;
+}
+
+.footer-container {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.footer-logo, .footer-description, .footer-regulator  {
+    min-width: 30%;
+    padding: 1%;
+}
+
+.footer-logo p {
+    font-size: 300%;
+    font-weight: bold;
+}
+
+.footer-description p {
+    font-size: 100%;
+    color: white;
+    line-height: 1.5;
+}
+
+.footer-regulator {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.LembagaPengawas {
+    align-items: center;
+}
+
+.LembagaPengawas img {
+    width: 20%;
+    margin: 0% 1%;
+}
+
+.footer-bottom {
+    text-align: center;
+    color: white;
+    font-size: 90%;
+}
+
+
+
+
