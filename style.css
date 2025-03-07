@@ -164,5 +164,6 @@ footer {
     section:nth-child(2) > ul {
         display: grid;
         grid-template-columns: auto;
+        
     }
 }
