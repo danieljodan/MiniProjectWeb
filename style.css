@@ -1,0 +1,168 @@
+/* UNIVERSAL */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+html {
+    font-family: 'Poppins';
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #dedede;
+    padding: .8rem 6rem;
+}
+
+/* article {
+    padding: 2rem 6rem;
+} */
+
+h1 {
+    font-size: 1.5em;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+section {
+    padding: .8rem 6rem;
+}
+
+footer {
+    border-top: 1px solid #dedede;
+}
+
+/* HALAMAN UTAMA */
+header nav ul {
+    gap: 3em;
+    display: flex;
+    list-style: none;
+}
+
+section:nth-child(1) {
+    padding: 4rem 6rem;
+    background-color: #EFF1F3;
+}
+
+section:nth-child(1) input {
+    width: 25%;
+    padding: 8px;
+}
+
+section:nth-child(2) > ul {
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+section:nth-child(2) > ul h2 {
+    margin: 0;
+}
+
+section:nth-child(2) > ul > li:hover {
+    /* background-color: #f6f7fc; */
+    background-color: #EFF1F3;
+}
+
+section:nth-child(2) > ul > li > a {
+    border: 1px solid #dedede;
+    display: flex;
+    flex-direction: row;
+    padding: 1.6rem;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px #dedede;
+}
+
+section:nth-child(2) > ul > li > a > div + div {
+    margin-left: 5%;
+}
+
+section:nth-child(2) > div {
+    margin: 50px 0 25px 0;
+    text-align: center;
+}
+
+section:nth-child(2) > div > a {
+    background-color: rgb(125, 60, 255);
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+section:nth-child(2) > div > a:hover {
+    background-color: rgba(125, 60, 255, .8);
+}
+
+footer {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 2% 1%;
+    text-align: center;
+}
+
+.footer-container {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.footer-logo, .footer-description, .footer-regulator  {
+    min-width: 30%;
+    padding: 1%;
+}
+
+.footer-logo p {
+    font-size: 300%;
+    font-weight: bold;
+}
+
+.footer-description p {
+    font-size: 100%;
+    color: white;
+    line-height: 1.5;
+}
+
+.footer-regulator {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.LembagaPengawas {
+    align-items: center;
+}
+
+.LembagaPengawas img {
+    width: 20%;
+    margin: 0% 1%;
+}
+
+.footer-bottom {
+    text-align: center;
+    color: white;
+    font-size: 90%;
+}
+
+/* RESPONSIVE MODE */
+@media screen and (max-width: 775px) {
+    section:nth-child(2) > ul {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
