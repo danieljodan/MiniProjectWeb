@@ -235,7 +235,7 @@ footer {
     box-sizing: border-box;
     display: flex;
     margin-bottom: 5em;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .FooterLogo {
@@ -250,7 +250,6 @@ footer {
 .FooterRegulator {
     box-sizing: border-box;
     flex-basis: 20%;
-    outline: 1px solid white;
     display: flex;
     text-align: right;
     flex-direction: column;
