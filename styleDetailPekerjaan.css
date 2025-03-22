@@ -6,89 +6,275 @@ html {
 
 body {
     margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 35% 35% 30%;
+    grid-template-areas: 
+    "header header header"
+    "main main sidebar"
+    "footer footer footer";
 }
 
 header {
+    grid-area: header;
+    height: 80px;
+    padding: 1em 5em;
+    box-shadow: 0px 2px 5px grey;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1% 5%;
-    background-color: antiquewhite;
-    margin: 0% 0% 1% 0%;
+    margin-bottom: 2%;
+    position: sticky;
+    top: 0;
+    background-color: black;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+
 }
 
-.nav-menu {
-    list-style-type: none;
-    display: flex;
-    gap: 25em;
+header h1 {
+    flex-basis: 40%;
 }
 
-.Lamaran {
-    margin: 10%;
-}
-
-.Lamaran a {
-    border-radius: 10px;
-    background-color: #7d3cff;
-    padding: 10px;
+header h1 a {
+    text-decoration: none;
     color: white;
 }
 
-
-.ProfilPerusahaan, .Lamaran, .Tips, .DeskripsiPekerjaan{
-    margin: 0% 5%;
-}
-
-footer {
-    background-color: rgb(0, 0, 0);
-    color: white;
-    padding: 2% 1%;
-    text-align: center;
-}
-
-.footer-container {
-    width: 90%;
+header nav {
+    flex-basis: 60%;
+    font-size: Larger;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    text-align: left;
+    justify-content: flex-end;
+    column-gap: 1em;
+    color: white;
 }
 
-.footer-logo, .footer-description, .footer-regulator  {
-    min-width: 30%;
-    padding: 1%;
+header nav a {
+    text-decoration: none;
+    color: white;
 }
 
-.footer-logo p {
-    font-size: 300%;
+header nav a:hover {
     font-weight: bold;
 }
 
-.footer-description p {
-    font-size: 100%;
-    color: white;
-    line-height: 1.5;
+main {
+    grid-area: main;
 }
 
-.footer-regulator {
-    text-align: center;
+.shadow {
+    box-shadow: 0px 15px 10px -15px grey;    
+    margin: 0 5% 3em 10em;
+    padding: 0 0 1% 0;
+}
+
+.ProfilPerusahaan {
+    box-sizing: border-box;
+    margin: 0 2em 0 2em;
+}
+
+.OpsiDaftar {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.Lamaran {
+    box-sizing: border-box;
+    margin: 0 2em 0 2em;
+    padding: 30px 0;
+}
+
+.Lamaran a {
+    text-decoration: none;
+    color: white;
+    background-color: #7d3cff;
+    padding: 1em 2em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.Lamaran a:hover {
+    box-shadow: 0px 1px 5px grey;
+    background-color: #4d269b;
+}
+
+.Share {
+    box-sizing: border-box;
+    padding: 30px 0;
+}
+
+.Share a {
+    text-decoration: none;
+    color: black;
+    outline: 2px solid #4d269b;
+    padding: 1em 2em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.Share a:hover {
+    box-shadow: 0px 1px 5px grey;
+    background-color: whitesmoke;
+}
+
+
+.DeskripsiPekerjaan {
+    box-sizing: border-box;
+    margin: 0 5em 3em 12em;
+}
+
+.Tips {
+    box-sizing: border-box;
+    margin: 0 5em 3em 12em;
+}
+
+aside {
+    grid-area: sidebar;
+    box-sizing: border-box;
+    margin: 0 12em 0 0;
+}
+
+aside h3 {
+    margin: 0 0 1em 0;
+}
+
+
+.job-list {
+    margin-bottom: 1.25rem;
+}
+
+.job-list > ul {
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+    list-style: none;
     display: flex;
     flex-direction: column;
 }
 
-.LembagaPengawas {
-    align-items: center;
+.job-list > ul > li > a {
+    text-decoration: none;
+    color: black;
 }
 
-.LembagaPengawas img {
-    width: 20%;
-    margin: 0% 1%;
+.job-list > ul h3 {
+    margin: 0;
 }
 
-.footer-bottom {
+.job-list > ul > li:hover {
+    background-color: #EFF1F3;
+}
+
+.job-list > ul > li > a {
+    border: 1px solid #dedede;
+    display: block;
+    padding: 1.6em;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #dedede;
+}
+
+.job-list > ul > li > a > div + div {
+    margin-left: 5%;
+}
+
+.job-list > div {
+    margin: 50px 0 25px 0;
     text-align: center;
+}
+
+.job-list > div > a {
+    background-color: rgb(125, 60, 255);
     color: white;
-    font-size: 90%;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.job-list > div > a:hover {
+    background-color: rgba(125, 60, 255, .8);
+}
+
+.perusahaan-loker {
+    font-weight: 500;
+}
+
+.info-pekerjaan {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 9999px;
+}
+
+.badge-kategori {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+
+.badge-jenis {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+footer {
+    box-sizing: border-box;
+    width: 100%;
+    grid-area: footer;
+    background-color: black;
+    color: white;
+    padding: 2em 5em 1em 5em;
+}
+
+.FooterContainer {
+    box-sizing: border-box;
+    display: flex;
+    margin-bottom: 5em;
+    justify-content: space-between;
+}
+
+.FooterLogo {
+    box-sizing: border-box;
+    flex-basis: 20%;
+}
+.FooterDescription {
+    box-sizing: border-box;
+    flex-basis: 50%;
+    text-align: justify;
+}
+.FooterRegulator {
+    box-sizing: border-box;
+    flex-basis: 20%;
+    outline: 1px solid white;
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+}
+
+.FooterBottom {
+    text-align: center;
+    font-size: smaller;
+}
+
+.LembagaPengawas {
+    display: flex;
+    gap: 1em;
+    align-self: flex-end;
+}
+
+.LembagaPengawas #Komidigi {
+    height: 40px;
+    align-self: center;
+}
+
+.LembagaPengawas #KementerianKetenagakerjaan {
+    height: 50px;
+    align-self: center;
 }
 
 
