@@ -72,7 +72,7 @@ main {
 
 .ProfilPerusahaan {
     box-sizing: border-box;
-    margin: 0 2em 0 2em;
+    margin: 0 0 0 2em;
 }
 
 .OpsiDaftar {
@@ -98,7 +98,7 @@ main {
 
 .Lamaran a:hover {
     box-shadow: 0px 1px 5px grey;
-    background-color: #4d269b;
+    background-color: #632fca;
 }
 
 .Share {
@@ -267,15 +267,11 @@ footer {
 }
 
 .LembagaPengawas #Komidigi {
-    height: 40px;
+    height: 45px;
     align-self: center;
 }
 
 .LembagaPengawas #KementerianKetenagakerjaan {
-    height: 50px;
+    height: 60px;
     align-self: center;
 }
-
-
-
-

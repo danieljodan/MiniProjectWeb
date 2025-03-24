@@ -5,29 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sahabat Karier | Detail Pekerjaan</title>
     <link href="styleDetailPekerjaan.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <header>
         <a href="halamanUtama.html">Sahabat Karier</a>
         <nav>
             <ul>
-                <li><a href="halamanUtama.html">Beranda</a></li>
-                <li><a href="halamanDetail.html">Detail Pekerjaan</a></li>
-                <li id="Login"><a href="halamanLogin.html">Login</a></li>
+                <a id="Register" href="halamanRegister.html"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+                <a id="Login" href="halamanLogin.html"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
             </ul>
         </nav>
     </header>
     <main>
-        <section class="ProfilPerusahaan">
-            <img src="image/PTEsha.png" alt="PTEshaParama" width="100px">
-            <h2>Network Security Engineer</h2>
-            <p>PT Esha Parama Teknologi</p>
-            <p>PT Esha Parama Teknologi, Kasablanka Office Tower A 26 F, Jl Casablanca Raya Kav.88, Jakarta, Jakarta Selatan 12870, Indonesia</p>
-            <p>Rp 6.000.000 - 7.500.000 / Bulan</p>
-            <p>Teknologi Informasi</p>
-            <p>Full Time</p>
-            <p>Tayang sejak: 3 Februari 2025</p>
-        </section>
+        <div class="shadow">
+            <section class="ProfilPerusahaan">
+                <img src="image/PTEsha.png" alt="PTEshaParama" width="100px">
+                <h2>Network Security Engineer</h2>
+                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i>PT Esha Parama Teknologi</p>
+                <p><i class='bx bxs-map-pin'>&ThickSpace; &ThickSpace;</i>PT Esha Parama Teknologi, Kasablanka Office Tower A 26 F, Jl Casablanca Raya Kav.88, Jakarta, Jakarta Selatan 12870, Indonesia</p>
+                <p><i class='bx bx-dollar'>&ThickSpace; &ThickSpace;</i>Rp 6.000.000 - 7.500.000 / Bulan</p>
+                <p><i class='bx bx-buildings'>&ThickSpace; &ThickSpace;</i>Teknologi Informasi</p>
+                <p><i class='bx bx-time'>&ThickSpace; &ThickSpace;</i>Full Time</p>
+                <p><i class='bx bx-calendar'>&ThickSpace; &ThickSpace;</i>Tayang sejak: 3 Februari 2025</p>
+            </section>
+            <div class="OpsiDaftar">
+                <div class="Lamaran">
+                    <a href="lamar.html">Lamar Pekerjaan</a>
+                </div>
+                <div class="Share">
+                    <a href="#"><i class='bx bxs-share-alt'>&ThickSpace;</i>Share</a>
+                </div>
+            </div>
+        </div>
         <section class="DeskripsiPekerjaan">
             <h3>Deskripsi Pekerjaan</h3>
             <ul>
@@ -63,24 +73,81 @@
             <p>Pemberi kerja yang benar tidak akan meminta akun Telegram, top-ups atau pembayaran dalam bentuk apapun. Jangan berikan kontak pribadi, informasi bank, maupun kartu kredit kamu.</p>
         </section> 
     </main>
+    <aside>
+        <h3>Lowongan Lainnya</h3>
+        <div class="LowonganLainnya">
+            <section class="job-list">
+                <ul>
+                    <li class="job-card">
+                        <a href="halamanDetail.html">
+                            <div>
+                                <img src="image/PTEsha.png" alt="Esha Parama Technology">
+                            </div>
+                            <div>
+                                <h3>Network Security Engineer</h3>
+                                <h4 class="perusahaan-loker">PT Esha Parama Technology</h3>
+                                <p class="lokasi-loker">Jakarta, Jakarta Selatan</p>
+                                <div class="info-pekerjaan">
+                                    <p class="badge badge-kategori">Teknologi Informasi</p>
+                                    <p class="badge badge-jenis">Penuh Waktu</p>
+                                </div> 
+                            </div>
+                        </a>
+                    </li>
+                    <li class="job-card">
+                        <a href="halamanDetail.html">
+                            <div>
+                                <img src="image/PTEsha.png" alt="Esha Parama Technology">
+                            </div>
+                            <div>
+                                <h3>Network Security Engineer</h3>
+                                <h4 class="perusahaan-loker">PT Esha Parama Technology</h3>
+                                <p class="lokasi-loker">Jakarta, Jakarta Selatan</p>
+                                <div class="info-pekerjaan">
+                                    <p class="badge badge-kategori">Teknologi Informasi</p>
+                                    <p class="badge badge-jenis">Penuh Waktu</p>
+                                </div> 
+                            </div>
+                        </a>
+                    </li>
+                    <li class="job-card">
+                        <a href="halamanDetail.html">
+                            <div>
+                                <img src="image/PTEsha.png" alt="Esha Parama Technology">
+                            </div>
+                            <div>
+                                <h3>Network Security Engineer</h3>
+                                <h4 class="perusahaan-loker">PT Esha Parama Technology</h3>
+                                <p class="lokasi-loker">Jakarta, Jakarta Selatan</p>
+                                <div class="info-pekerjaan">
+                                    <p class="badge badge-kategori">Teknologi Informasi</p>
+                                    <p class="badge badge-jenis">Penuh Waktu</p>
+                                </div> 
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </aside>
     <footer>
-        <div class="footer-container">
-            <div class="footer-logo">
-                <p>Sahabat Karier</p>
+        <div class="FooterContainer">
+            <div class="FooterLogo">
+                <h1>Sahabat Karier</h1>
             </div>
-            <div class="footer-description">
+            <div class="FooterDescription">
                 <p>Sahabat Karier adalah platform pencarian kerja yang didedikasikan untuk membantu para pencari kerja di Indonesia menemukan peluang karier terbaik dengan lebih mudah dan efisien. Dengan konsep sebagai "sahabat" dalam perjalanan profesional, kami menyediakan berbagai lowongan kerja dari perusahaan ternama, serta fitur pencocokan kerja yang disesuaikan dengan keterampilan dan minat pengguna.</p>
             </div>
-            <div class="footer-regulator">
+            <div class="FooterRegulator">
                 <p>Terdaftar dan Diawasi Oleh</p>
                 <div class="LembagaPengawas">
-                    <img src="image/Komidigi.png" alt="Komidigi">
-                    <img src="image/KementerianKetenagakerjaan.png" alt="KementerianKetenagakerjaan">
+                    <img id="Komidigi" src="image/Komidigi.png" alt="Komidigi">
+                    <img id="KementerianKetenagakerjaan" src="image/KementerianKetenagakerjaan.png" alt="KementerianKetenagakerjaan">
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            &copy; 2025 Sahabat Karier. All rights reserved.
+        <div class="FooterBottom">
+            <p>&copy; 2025 Sahabat Karier. All rights reserved.</p>
         </div>
     </footer>
 </body>
