@@ -26,7 +26,7 @@ header {
     margin-bottom: 2%;
     position: sticky;
     top: 0;
-    background-color: black;
+    background-color: rgb(20, 20, 20);
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
 
@@ -58,6 +58,7 @@ header nav a {
 
 header nav a:hover {
     font-weight: bold;
+    text-shadow: 0px 0px 2px white;
 }
 
 main {
@@ -98,7 +99,7 @@ main {
 
 .Lamaran a:hover {
     box-shadow: 0px 1px 5px grey;
-    background-color: #632fca;
+    background-color: #602ec4;
 }
 
 .Share {
@@ -118,7 +119,7 @@ main {
 
 .Share a:hover {
     box-shadow: 0px 1px 5px grey;
-    background-color: whitesmoke;
+    background-color: rgb(240, 240, 240);
 }
 
 
@@ -167,6 +168,7 @@ aside h3 {
 
 .job-list > ul > li:hover {
     background-color: #EFF1F3;
+    box-shadow: 0px 1px 10px whitesmoke;
 }
 
 .job-list > ul > li > a {
@@ -226,7 +228,7 @@ footer {
     box-sizing: border-box;
     width: 100%;
     grid-area: footer;
-    background-color: black;
+    background-color: rgb(20, 20, 20);
     color: white;
     padding: 2em 5em 1em 5em;
 }
