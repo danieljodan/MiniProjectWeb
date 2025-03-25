@@ -211,6 +211,7 @@ aside h3 {
     padding: 4px 8px;
     text-align: center;
     border-radius: 9999px;
+    font-size: small;
 }
 
 .badge-kategori {
