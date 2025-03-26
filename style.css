@@ -92,6 +92,11 @@ section {
 
 footer {
     border-top: 1px solid #dedede;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    padding: 2em 5em 1em 5em;
 }
 
 /* HALAMAN UTAMA */
@@ -124,6 +129,8 @@ form {
     padding: .5rem 1.25rem;
     cursor: pointer;
     font-size: 1em;
+    background-color: #7d3cff;
+    color: white;
     /* outline: 1px solid blue; */
 }
 
@@ -175,6 +182,10 @@ form {
 .job-list > ul > .job-card:hover {
     /* background-color: #f6f7fc; */
     background-color: #EFF1F3;
+}
+
+.job-card:hover .nama-pekerjaan {
+    text-decoration: underline;
 }
 
 .job-list > ul > .job-card > a {
@@ -258,14 +269,6 @@ form {
 .badge-jenis {
     background-color: #f3f4f6;
     color: #1f2937;
-}
-
-footer {
-    box-sizing: border-box;
-    width: 100%;
-    background-color: rgb(20, 20, 20);
-    color: white;
-    padding: 2em 5em 1em 5em;
 }
 
 .FooterContainer {
