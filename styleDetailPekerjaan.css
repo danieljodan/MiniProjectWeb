@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+html {
+    font-family: 'Poppins';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 35% 35% 30%;
+    grid-template-areas: 
+    "header header header"
+    "main main sidebar"
+    "footer footer footer";
+}
+
+header {
+    grid-area: header;
+    height: 80px;
+    padding: 1em 5em;
+    box-shadow: 0px 2px 5px grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2%;
+    position: sticky;
+    top: 0;
+    background-color: rgb(20, 20, 20);
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+
+}
+
+header h1 {
+    flex-basis: 40%;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav {
+    flex-basis: 60%;
+    font-size: Larger;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 1em;
+    color: white;
+}
+
+header nav a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav a:hover {
+    text-shadow: 0px 0px 6px white;
+}
+
+main {
+    grid-area: main;
+}
+
+.ProfilPerusahaan img {
+    height: 75px;
+    width: auto;
+}
+
+.shadow {
+    box-shadow: 0px 15px 10px -15px grey;    
+    margin: 0 5% 3em 10em;
+    padding: 0 0 1% 0;
+}
+
+.ProfilPerusahaan {
+    box-sizing: border-box;
+    margin: 0 0 0 2em;
+}
+
+.OpsiDaftar {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.Lamaran {
+    box-sizing: border-box;
+    margin: 0 2em 0 2em;
+    padding: 30px 0;
+}
+
+.Lamaran a {
+    text-decoration: none;
+    color: white;
+    background-color: #7d3cff;
+    padding: 1em 2em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.Lamaran a:hover {
+    box-shadow: 0px 1px 5px grey;
+    background-color: #602ec4;
+}
+
+.Share {
+    box-sizing: border-box;
+    padding: 30px 0;
+}
+
+.Share a {
+    text-decoration: none;
+    color: black;
+    outline: 2px solid #4d269b;
+    padding: 1em 2em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.Share a:hover {
+    box-shadow: 0px 1px 5px grey;
+    background-color: rgb(240, 240, 240);
+}
+
+
+.DeskripsiPekerjaan {
+    box-sizing: border-box;
+    margin: 0 5em 3em 12em;
+}
+
+.Tips {
+    box-sizing: border-box;
+    margin: 0 5em 3em 12em;
+}
+
+aside {
+    grid-area: sidebar;
+    box-sizing: border-box;
+    margin: 0 12em 0 0;
+}
+
+aside h3 {
+    margin: 0 0 1em 0;
+}
+
+
+.job-list {
+    margin-bottom: 1.25rem;
+}
+
+.job-list img {
+    width: 60px;
+    margin-left: 10px;
+}
+
+.job-list > ul {
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-list > ul > li > a {
+    text-decoration: none;
+    color: black;
+}
+
+.job-list > ul h3 {
+    margin: 0;
+}
+
+.job-list > ul > li:hover {
+    background-color: #EFF1F3;
+    box-shadow: 0px 1px 10px whitesmoke;
+}
+
+.job-list > ul > li > a {
+    border: 1px solid #dedede;
+    display: block;
+    padding: 1.6em;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #dedede;
+}
+
+.job-list > ul > li > a > div + div {
+    margin-left: 5%;
+}
+
+.job-list > div {
+    margin: 50px 0 25px 0;
+    text-align: center;
+}
+
+.job-list > div > a {
+    background-color: rgb(125, 60, 255);
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.job-list > div > a:hover {
+    background-color: rgba(125, 60, 255, .8);
+}
+
+.perusahaan-loker {
+    font-weight: 500;
+}
+
+.info-pekerjaan {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 9999px;
+    font-size: small;
+}
+
+.badge-kategori {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+
+.badge-jenis {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+footer {
+    box-sizing: border-box;
+    width: 100%;
+    grid-area: footer;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    padding: 2em 5em 1em 5em;
+}
+
+.FooterContainer {
+    box-sizing: border-box;
+    display: flex;
+    margin-bottom: 5em;
+    justify-content: space-around;
+}
+
+.FooterLogo {
+    box-sizing: border-box;
+    flex-basis: 20%;
+}
+.FooterDescription {
+    box-sizing: border-box;
+    flex-basis: 50%;
+    text-align: justify;
+}
+.FooterRegulator {
+    box-sizing: border-box;
+    flex-basis: 20%;
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+}
+
+.FooterBottom {
+    text-align: center;
+    font-size: smaller;
+}
+
+.LembagaPengawas {
+    display: flex;
+    gap: 1em;
+    align-self: flex-end;
+}
+
+.LembagaPengawas #Komidigi {
+    height: 45px;
+    align-self: center;
+}
+
+.LembagaPengawas #KementerianKetenagakerjaan {
+    height: 60px;
+    align-self: center;
+}
