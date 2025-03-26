@@ -156,6 +156,9 @@ body {
     padding: 0 25px 25px 25px;
     border-radius: 25px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 0 50px;
+    
 }
 
 .container header {
@@ -259,7 +262,7 @@ body {
     margin-top: 20px;
     height: 50px;
     width: 100%;
-    background: #2c2c2c;
+    background: #7d3cff;
     color: #fff;
     border: none;
     outline: none;
@@ -270,7 +273,7 @@ body {
 }
 
 .form button:hover {
-    background: black;
+    background: #5a2ecc;
     transition: 0.3s;
 }
 
