@@ -5,9 +5,9 @@ html {
     font-family: Poppins;
 }
 
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 
 /* --------------------------------------------------------------- HEADER --------------------------------------------------------------- */
 
@@ -153,8 +153,11 @@ body {
     width: 100%;
     background: #fff;
     padding: 0 25px 25px 25px;
-    border-radius: 8px;
+    border-radius: 25px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 0 50px;
+    
 }
 
 .container header {
