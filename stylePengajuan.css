@@ -5,9 +5,9 @@ html {
     font-family: Poppins;
 }
 
-* {
+/* * {
     box-sizing: border-box;
-}
+} */
 
 /* --------------------------------------------------------------- HEADER --------------------------------------------------------------- */
 
@@ -148,12 +148,13 @@ body {
 }
 
 .container {
+    box-sizing: border-box;
     position: sticky;
     max-width: 700px;
     width: 100%;
     background: #fff;
     padding: 0 25px 25px 25px;
-    border-radius: 8px;
+    border-radius: 25px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -218,6 +219,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 0 15px;
+    box-sizing: border-box;
 }
 
 .form .column {
