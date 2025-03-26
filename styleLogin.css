@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+html {
+    font-family: 'Poppins';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 80px;
+    padding: 1em 5em;
+    box-shadow: 0px 2px 5px grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2%;
+    position: sticky;
+    top: 0;
+    background-color: rgb(20, 20, 20);
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+header h1 {
+    flex-basis: 40%;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav {
+    flex-basis: 60%;
+    font-size: Larger;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 1em;
+    color: white;
+}
+
+header nav a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav a:hover {
+    text-shadow: 0px 0px 6px white;
+}
+
+.login {
+    width: 40%;
+    margin: 0 auto;
+    outline: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px grey;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.login h2 {
+    font-size: 30px;
+    margin: 10px 0 5px 10px;
+}
+
+.login h2+p {
+    margin: 0 0 15px 10px;
+}
+
+.login p {
+    font-size: 18px;
+    margin: 10px 0 0 10px;
+}
+
+main a {
+    margin: 0 0 0 10px;
+    font-size: 15px;
+    color: #602ec4;
+}
+
+main a:hover {
+    color: #301665;
+}
+
+p.daftar {
+    margin-top: 5px;
+    font-size: 15px;
+    color: black;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 0px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.login input[type="submit"] {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background-color: #7d3cff;
+    color: white;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.login input[type="submit"]:hover {
+    background-color: #602ec4;
+    box-shadow: 0px 1px 5px grey;
+}
+
+footer p {
+    text-align: right;
+    color: gray
+}
