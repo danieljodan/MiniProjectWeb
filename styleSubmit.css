@@ -36,6 +36,7 @@ main {
     font-size: 1rem;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    margin-top: 2rem;
 }
 
 .kembali a {
