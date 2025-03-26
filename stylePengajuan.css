@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+
+html {
+    font-family: Poppins;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------- HEADER --------------------------------------------------------------- */
+
+main {
+    display: grid;
+    margin: 0 30% 2.5% 30%;
+}
+
+header {
+    grid-area: header;
+    height: 80px;
+    padding: 1em 5em;
+    box-shadow: 0px 2px 5px grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2%;
+    position: sticky;
+    top: 0;
+    background-color: rgb(20, 20, 20);
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    z-index: 1000;
+
+}
+
+header h1 {
+    flex-basis: 40%;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav {
+    flex-basis: 60%;
+    font-size: Larger;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 1em;
+    color: white;
+}
+
+header nav a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav a:hover {
+    text-shadow: 0px 0px 6px white;
+}
+
+
+/* --------------------------------------------------------------- JOBLIST --------------------------------------------------------------- */
+h5 {
+    font-weight: normal;
+    
+}
+
+.shadow {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    padding: 1% 0 1% 0;
+    width: 100%;
+    align-content: center;
+    background-color: white;
+    border-radius: 25px;
+}
+
+.ProfilPerusahaan img {
+    width: 7rem;
+    height: 5rem;
+    float: left;
+    clear: left;
+    margin: 0 1em 0 0;
+
+}
+
+.ProfilPerusahaan {
+    box-sizing: border-box;
+    margin: 0 0 0 2em;
+}
+
+.ProfilPerusahaan h2 {
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    padding-left: 130px;
+}
+
+.ProfilPerusahaan p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    padding-left: 130px;
+}
+
+.OpsiDaftar {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.Lamaran {
+    box-sizing: border-box;
+    margin: 0 2em 0 2em;
+    width: 100%;
+
+}
+
+.Lamaran a {
+    color: #525252;
+    padding: 10px 0px;
+    padding-left: 130px;
+    display: flex;
+    align-items: left;
+    text-decoration: underline;
+    align-items: center;
+    align-content: left;
+}
+
+.Lamaran a:hover {
+    text-decoration:underline;
+    color: #000000;
+}
+
+
+/* --------------------------------------------------------------- FORM --------------------------------------------------------------- */
+
+body {
+    min-height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+}
+
+.container {
+    position: sticky;
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    padding: 0 25px 25px 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.container header {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+}
+
+.container .form {
+    margin-top: 30px;
+}
+
+.form .input-box {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* buat ngasih shadow dibawah box waktu di klik */
+.input-box input:focus {
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1)
+}
+
+.input-box label {
+    color: #333;
+}
+
+.form-lamaran {
+    text-align: center;
+    font-size: xx-large;
+}
+
+.form input-box input {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    border: 1px solid #ccc;
+}
+
+.container .form {
+    margin-top: 30px;
+}
+
+.form .input-box {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.input-box label {
+    color: #333;
+}
+
+.form .input-box input {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #707070;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+}
+
+.form .column {
+    display: flex;
+    column-gap: 15px;
+}
+
+@media screen and (max-width: 500px) {
+    .form .column {
+        flex-wrap: wrap;
+    }
+}
+
+#CV {
+    text-align: center;
+    padding-top: 1.95%;
+}
+
+#Portofolio {
+    text-align: center;
+    padding-top: 1.95%;
+}
+
+#Opsional {
+    color: #707070;
+    font-size: small;
+}
+
+#format_file {
+    font-style: italic;
+    color: #707070;
+    font-size: small;
+    margin-top: 0%;
+}
+
+.form button {
+    margin-top: 20px;
+    height: 50px;
+    width: 100%;
+    background: #2c2c2c;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.form button:hover {
+    background: black;
+    transition: 0.3s;
+}
+
+/* --------------------------------------------------------------- FOOTER --------------------------------------------------------------- */
+
+footer {
+    box-sizing: border-box;
+    width: 100%;
+    grid-area: footer;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    padding: 2em 5em 1em 5em;
+    /* bottom: 0;
+    position: absolute; */
+}
+
+.FooterContainer {
+    box-sizing: border-box;
+    display: flex;
+    margin-bottom: 5em;
+    justify-content: space-around;
+}
+
+.FooterLogo {
+    box-sizing: border-box;
+    flex-basis: 20%;
+}
+.FooterDescription {
+    box-sizing: border-box;
+    flex-basis: 50%;
+    text-align: justify;
+}
+.FooterRegulator {
+    box-sizing: border-box;
+    flex-basis: 20%;
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+}
+
+.FooterBottom {
+    text-align: center;
+    font-size: smaller;
+}
+
+.LembagaPengawas {
+    display: flex;
+    gap: 1em;
+    align-self: flex-end;
+}
+
+.LembagaPengawas #Komidigi {
+    height: 45px;
+    align-self: center;
+}
+
+.LembagaPengawas #KementerianKetenagakerjaan {
+    height: 60px;
+    align-self: center;
+}

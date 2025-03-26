@@ -7,14 +7,64 @@ html {
 
 body {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    
 }
 
-header {
+/* header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #dedede;
     padding: .8rem 6rem;
+} */
+
+/* Punya Daniel */
+header {
+    height: 80px;
+    padding: 1em 5em;
+    box-shadow: 0px 2px 5px grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2%;
+    position: sticky;
+    top: 0;
+    background-color: black;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+
+}
+
+header h1 {
+    flex-basis: 40%;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+header nav {
+    flex-basis: 60%;
+    font-size: Larger;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 1em;
+    color: white;
+}
+
+header nav a {
+    text-decoration: none;
+    color: white;
+}
+
+
+header nav a:hover {
+    font-weight: bold;
 }
 
 /* article {
@@ -50,120 +100,272 @@ header nav ul {
     list-style: none;
 }
 
-section:nth-child(1) {
-    padding: 4rem 6rem;
+.search-container {
+    width: 100%;
+    padding: 4rem 0rem;
     background-color: #EFF1F3;
+    /* background-color: #f2f4f5; */
 }
 
-section:nth-child(1) input {
-    width: 25%;
-    padding: 8px;
+form {
+    margin: 0 auto;
+    max-width: 60%;
 }
 
-section:nth-child(2) > ul {
+.search-row input {
+    padding: .5rem;
+    flex: 1;
+    font-size: 1em;
+    /* outline: 1px solid red; */
+}
+
+.search-row button {
+    padding: .5rem 1.25rem;
+    cursor: pointer;
+    font-size: 1em;
+    /* outline: 1px solid blue; */
+}
+
+.filter-row select {
+    padding: .5rem;
+    /* flex: 1; */
+    font-size: 0.875em;         /* 14px */
+    /* outline: 1px solid green; */
+}
+
+.search-row, 
+.filter-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.search-row input,
+.search-row button,
+.filter-row select {
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+.job-list {
+    margin-bottom: 2.5rem;
+}
+
+.job-list > ul {
     margin: 0;
     padding: 0;
     gap: 20px;
     list-style: none;
     display: grid;
-    grid-template-columns: auto auto;
+    /* grid-template-columns: auto auto; */
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 }
 
-section:nth-child(2) > ul h2 {
+.job-list img {
+    width: 100px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.job-list > ul h3 {
     margin: 0;
 }
 
-section:nth-child(2) > ul > li:hover {
+.job-list > ul > .job-card:hover {
     /* background-color: #f6f7fc; */
     background-color: #EFF1F3;
 }
 
-section:nth-child(2) > ul > li > a {
-    border: 1px solid #dedede;
-    display: flex;
-    flex-direction: row;
+.job-list > ul > .job-card > a {
     padding: 1.6rem;
+    border: 1px solid #dedede;
     border-radius: 10px;
-    box-shadow: inset 0 0 0 1px #dedede;
+    display: flex;
+    /* flex-direction: row; */
+    /* box-shadow: inset 0 0 0 1px #dedede; */
+    box-shadow: 0 0 5px #dedede;
 }
 
-section:nth-child(2) > ul > li > a > div + div {
+/* .job-card {
+    height: 100%;
+} */
+
+/* .job-card > a > div:first-child {
+    width: 100px;
+} */
+
+.job-card > a > div + div {
     margin-left: 5%;
 }
 
-section:nth-child(2) > div {
+/* Tombol Load More */
+/* .job-list > div {
     margin: 50px 0 25px 0;
     text-align: center;
 }
 
-section:nth-child(2) > div > a {
+.job-list > div > a {
     background-color: rgb(125, 60, 255);
     color: white;
     padding: 10px;
     border-radius: 15px;
 }
 
-section:nth-child(2) > div > a:hover {
+.job-list > div > a:hover {
     background-color: rgba(125, 60, 255, .8);
+} */
+
+.perusahaan-loker {
+    font-weight: 500;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+/* 
+.lokasi-loker {
+    color: gray; 
+    margin-bottom: 0; 
+} */
+
+/* .gaji {
+    color: #218838;
+    font-weight: bold;
+} */
+.info-pekerjaan {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.badge {
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 9999px;
+}
+
+.badge-kategori {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+
+.badge-jenis {
+    background-color: #f3f4f6;
+    color: #1f2937;
 }
 
 footer {
-    background-color: rgb(0, 0, 0);
+    width: 100%;
+    background-color: black;
     color: white;
-    padding: 2% 1%;
-    text-align: center;
+    padding: 2em 5em 1em 5em;
+    box-sizing: border-box;
 }
 
-.footer-container {
-    width: 90%;
+.FooterContainer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
+    margin-bottom: 5em;
+    justify-content: space-around;
+    box-sizing: border-box;
 }
 
-.footer-logo, .footer-description, .footer-regulator  {
-    min-width: 30%;
-    padding: 1%;
+.FooterLogo {
+    flex-basis: 20%;
+    box-sizing: border-box;
 }
-
-.footer-logo p {
-    font-size: 300%;
-    font-weight: bold;
+.FooterDescription {
+    flex-basis: 50%;
+    text-align: justify;
+    box-sizing: border-box;
 }
-
-.footer-description p {
-    font-size: 100%;
-    color: white;
-    line-height: 1.5;
-}
-
-.footer-regulator {
-    text-align: center;
+.FooterRegulator {
+    flex-basis: 20%;
     display: flex;
+    text-align: right;
     flex-direction: column;
+    box-sizing: border-box;
+}
+
+.FooterBottom {
+    text-align: center;
+    font-size: smaller;
 }
 
 .LembagaPengawas {
-    align-items: center;
+    display: flex;
+    gap: 1em;
+    align-self: flex-end;
 }
 
-.LembagaPengawas img {
-    width: 20%;
-    margin: 0% 1%;
+.LembagaPengawas #Komidigi {
+    max-height: 40px;
+    align-self: center;
 }
 
-.footer-bottom {
-    text-align: center;
-    color: white;
-    font-size: 90%;
+.LembagaPengawas #KementerianKetenagakerjaan {
+    max-height: 50px;
+    align-self: center;
 }
 
 /* RESPONSIVE MODE */
-@media screen and (max-width: 775px) {
-    section:nth-child(2) > ul {
-        display: grid;
-        grid-template-columns: auto;
-        
+@media screen and (max-width: 507px) {
+    .job-list img {
+        width: 50%;
+        height: 50%;
+    }
+
+    .job-list > ul > li > a {
+        flex-direction: column;
+    }
+
+    .job-card > a > div + div {
+        margin-top: 0.625rem;                   /* 10px */
+        margin-left: 0;
     }
 }
+
+@media screen and (max-width: 775px) {
+
+    .search-row, 
+    .filter-row {
+        display: block;
+        text-align: center;
+    }
+
+    .search-row input {
+        width: 100%;
+        margin-bottom: .5rem;
+    }
+
+    .search-row button {
+        margin-top: 1rem;
+        width: 25%;
+    }
+
+    .filter-row {
+        display: none;
+    }
+
+    .job-list > ul {
+        display: grid;
+        grid-template-columns: auto;
+    }
+
+    .job-list > ul > li > a {
+        font-size: 0.9em;
+    }
+
+    .FooterContainer {
+        display: block;
+    }
+
+    .LembagaPengawas {
+        display: block;
+    }
+}
+
