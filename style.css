@@ -23,6 +23,7 @@ body {
 
 /* Punya Daniel */
 header {
+    grid-area: header;
     height: 80px;
     padding: 1em 5em;
     box-shadow: 0px 2px 5px grey;
@@ -32,7 +33,7 @@ header {
     margin-bottom: 2%;
     position: sticky;
     top: 0;
-    background-color: black;
+    background-color: rgb(20, 20, 20);
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
 
@@ -62,10 +63,10 @@ header nav a {
     color: white;
 }
 
-
 header nav a:hover {
-    font-weight: bold;
+    text-shadow: 0px 0px 5px white;
 }
+
 
 /* article {
     padding: 2rem 6rem;
@@ -260,35 +261,35 @@ form {
 }
 
 footer {
+    box-sizing: border-box;
     width: 100%;
-    background-color: black;
+    background-color: rgb(20, 20, 20);
     color: white;
     padding: 2em 5em 1em 5em;
-    box-sizing: border-box;
 }
 
 .FooterContainer {
+    box-sizing: border-box;
     display: flex;
     margin-bottom: 5em;
     justify-content: space-around;
-    box-sizing: border-box;
 }
 
 .FooterLogo {
-    flex-basis: 20%;
     box-sizing: border-box;
+    flex-basis: 20%;
 }
 .FooterDescription {
+    box-sizing: border-box;
     flex-basis: 50%;
     text-align: justify;
-    box-sizing: border-box;
 }
 .FooterRegulator {
+    box-sizing: border-box;
     flex-basis: 20%;
     display: flex;
     text-align: right;
     flex-direction: column;
-    box-sizing: border-box;
 }
 
 .FooterBottom {
@@ -303,12 +304,12 @@ footer {
 }
 
 .LembagaPengawas #Komidigi {
-    max-height: 40px;
+    height: 45px;
     align-self: center;
 }
 
 .LembagaPengawas #KementerianKetenagakerjaan {
-    max-height: 50px;
+    height: 60px;
     align-self: center;
 }
 
