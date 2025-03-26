@@ -257,7 +257,7 @@ body {
     margin-top: 20px;
     height: 50px;
     width: 100%;
-    background: #2c2c2c;
+    background: #7d3cff;
     color: #fff;
     border: none;
     outline: none;
@@ -268,7 +268,7 @@ body {
 }
 
 .form button:hover {
-    background: black;
+    background: #5a2ecc;
     transition: 0.3s;
 }
 
