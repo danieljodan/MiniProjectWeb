@@ -235,6 +235,7 @@ aside h3 {
 }
 
 footer {
+    border-top: 1px solid #dedede;
     box-sizing: border-box;
     width: 100%;
     grid-area: footer;
@@ -276,6 +277,7 @@ footer {
     display: flex;
     gap: 1em;
     align-self: flex-end;
+    align-items: center;
 }
 
 .LembagaPengawas #Komidigi {
