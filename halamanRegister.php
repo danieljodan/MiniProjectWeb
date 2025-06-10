@@ -36,8 +36,8 @@
                     
                     <section class="statusLbl">
                     <p><label>Apakah Anda Perusahaan atau Calon Karyawan: </label></p>
-                    <p><input type="radio" name="role" id="rolePID" value="company"><label for="statusPID">Perusahaan</label></p>
-                    <p><input type="radio" name="role" id="roleKID" value="jobseeker"><label for="statusKID">Calon Karyawan</label></p>
+                    <p><input type="radio" name="role" id="rolePID" value="company"><label for="rolePID">Perusahaan</label></p>
+                    <p><input type="radio" name="role" id="roleKID" value="jobseeker"><label for="roleKID">Calon Karyawan</label></p>
                     </section>
 
                     <p><input type="submit" name="submit" value="Daftar" onclick="return konfirmasiEmailPassword()"></p>
