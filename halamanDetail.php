@@ -2,12 +2,11 @@
     session_start();
     if (!isset($_SESSION['user_id'])) {
         header('Location: halamanLogin.php');
-        exit;
+    exit;
     }
     
     include 'koneksi.php';
     
-    // Get user's email if not already in session
     if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
         $user_sql = "SELECT email FROM users WHERE id_users = ?";
         $user_stmt = $conn->prepare($user_sql);
@@ -55,10 +54,17 @@
         <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
-        </h1>
-        <nav>
-            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+        </h1>        <nav>
+            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                <?php 
+                    $username = explode('@', $_SESSION['email'])[0];
+                ?>
+                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($username); ?></span>
+                <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
+            <?php else: ?>
+                <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+                <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+            <?php endif; ?>
         </nav>
     </header>
     <main>

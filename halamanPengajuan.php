@@ -2,13 +2,11 @@
 session_start();
 include 'koneksi.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: halamanLogin.php');
     exit;
 }
 
-// Get user's email if not already in session
 if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
     $user_sql = "SELECT email FROM users WHERE id_users = ?";
     $user_stmt = $conn->prepare($user_sql);
@@ -62,9 +60,11 @@ if ($result->num_rows > 0) {
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
-        <nav>
-            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
-                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($_SESSION['email']); ?></span>
+        <nav>            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                <?php 
+                    $username = explode('@', $_SESSION['email'])[0];
+                ?>
+                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($username); ?></span>
                 <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
             <?php else: ?>
                 <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
@@ -113,23 +113,22 @@ if ($result->num_rows > 0) {
                     <label for="telepon">Nomor HP</label>
                     <input type="tel" id="telepon" name="no_telepon" placeholder="Masukkan nomor HP anda" pattern="[0-9]+" />
                     <p id="telepon-error" class="field-error"></p>
-                </div>
-                <div class="input-box">
+                </div>                <div class="input-box">
                     <label for="cv">CV</label>
-                    <input id="cv" name="cv" type="file" accept=".pdf" />
-                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
+                    <input id="cv" name="cv" type="file" accept=".pdf,.docx" />
+                    <p id="format_file">Format file yang diterima: PDF/DOCX (maksimal 5MB)</p>
                     <p id="cv-error" class="file-error"></p>
                 </div>
                 <div class="input-box">
                     <label for="portofolio">Portofolio <span id="Opsional"> (Opsional) </span></label>
                     <input id="portofolio" name="portofolio" type="file" accept=".pdf" />
-                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
+                    <p id="format_file">Format file yang diterima: PDF (maksimal 5MB)</p>
                     <p id="portofolio-error" class="file-error"></p>
                 </div>
                 <div class="input-box">
                     <label for="surat_lamaran">Surat Lamaran<span id="Opsional"> (Opsional) </span></label>
-                    <input id="surat_lamaran" name="surat_lamaran" type="file" accept=".pdf" />
-                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
+                    <input id="surat_lamaran" name="surat_lamaran" type="file" accept=".pdf,.docx,.jpg,.jpeg,.png" />
+                    <p id="format_file">Format file: pdf, docx, jpg, jpeg, png (maksimal 5MB)</p>
                     <p id="surat_lamaran-error" class="file-error"></p>
                 </div>
 
@@ -255,30 +254,62 @@ if ($result->num_rows > 0) {
                 default:
                     return true;
             }
+        }        function validateCVFile(fileInput) {
+            const file = fileInput.files[0];
+            const inputId = fileInput.id;
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            errorElement.style.display = 'none';
+            fileInput.classList.remove('file-input-error');
+            
+            if (!file) return true;
+            
+            const maxSize = 5 * 1024 * 1024;
+            const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            
+            if (file.size > maxSize) {
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                errorElement.textContent = `Maksimal file yang bisa diupload adalah 5MB`;
+                errorElement.style.display = 'block';
+                fileInput.classList.add('file-input-error');
+                fileInput.value = '';
+                return false;
+            }
+            
+            const fileName = file.name.toLowerCase();
+            if (!fileName.endsWith('.pdf') && !fileName.endsWith('.docx')) {
+                errorElement.textContent = `File harus PDF atau DOCX.`;
+                errorElement.style.display = 'block';
+                fileInput.classList.add('file-input-error');
+                fileInput.value = '';
+                return false;
+            }
+            
+            return true;
         }
 
         function validatePDFFile(fileInput, fieldName) {
             const file = fileInput.files[0];
             const inputId = fileInput.id;
             const errorElement = document.getElementById(`${inputId}-error`);
-
+            
             errorElement.style.display = 'none';
             fileInput.classList.remove('file-input-error');
-
+            
             if (!file) return true;
-
+            
             const maxSize = 5 * 1024 * 1024;
             const allowedTypes = ['application/pdf'];
-
+            
             if (file.size > maxSize) {
                 const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-                errorElement.textContent = `File terlalu besar (${fileSizeMB}MB). Maksimal 5MB.`;
+                errorElement.textContent = `Maksimal file yang bisa diupload adalah 5MB`;
                 errorElement.style.display = 'block';
                 fileInput.classList.add('file-input-error');
                 fileInput.value = '';
                 return false;
             }
-
+            
             if (!allowedTypes.includes(file.type)) {
                 errorElement.textContent = `File harus PDF.`;
                 errorElement.style.display = 'block';
@@ -286,7 +317,7 @@ if ($result->num_rows > 0) {
                 fileInput.value = '';
                 return false;
             }
-
+            
             const fileName = file.name.toLowerCase();
             if (!fileName.endsWith('.pdf')) {
                 errorElement.textContent = `File harus memiliki ekstensi .pdf`;
@@ -295,7 +326,31 @@ if ($result->num_rows > 0) {
                 fileInput.value = '';
                 return false;
             }
+            
+            return true;
+        }
 
+        function validateAnyFile(fileInput) {
+            const file = fileInput.files[0];
+            const inputId = fileInput.id;
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            errorElement.style.display = 'none';
+            fileInput.classList.remove('file-input-error');
+            
+            if (!file) return true;
+            
+            const maxSize = 5 * 1024 * 1024;
+            
+            if (file.size > maxSize) {
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                errorElement.textContent = `Maksimal file yang bisa diupload adalah 5MB`;
+                errorElement.style.display = 'block';
+                fileInput.classList.add('file-input-error');
+                fileInput.value = '';
+                return false;
+            }
+            
             return true;
         }
         ['nama', 'tanggal_lahir', 'email', 'telepon'].forEach(fieldId => {
@@ -308,9 +363,8 @@ if ($result->num_rows > 0) {
             field.addEventListener('input', function() {
                 clearFieldValidation(fieldId);
             });
-        });
-        document.getElementById('cv').addEventListener('change', function() {
-            validatePDFFile(this, 'CV');
+        });        document.getElementById('cv').addEventListener('change', function() {
+            validateCVFile(this);
         });
 
         document.getElementById('cv').addEventListener('blur', function() {
@@ -333,7 +387,7 @@ if ($result->num_rows > 0) {
         });
 
         document.getElementById('surat_lamaran').addEventListener('change', function() {
-            validatePDFFile(this, 'Surat Lamaran');
+            validateAnyFile(this);
         });
 
         document.querySelector('.form').addEventListener('submit', function(e) {
@@ -347,14 +401,13 @@ if ($result->num_rows > 0) {
 
             const cvInput = document.getElementById('cv');
             const portofolioInput = document.getElementById('portofolio');
-            const suratLamaranInput = document.getElementById('surat_lamaran');
-            if (cvInput.files.length === 0) {
+            const suratLamaranInput = document.getElementById('surat_lamaran');            if (cvInput.files.length === 0) {
                 const errorElement = document.getElementById('cv-error');
                 errorElement.textContent = 'CV wajib diupload';
                 errorElement.style.display = 'block';
                 cvInput.classList.add('file-input-error');
                 isValid = false;
-            } else if (!validatePDFFile(cvInput, 'CV')) {
+            } else if (!validateCVFile(cvInput)) {
                 isValid = false;
             }
 
@@ -362,7 +415,7 @@ if ($result->num_rows > 0) {
                 isValid = false;
             }
 
-            if (suratLamaranInput.files.length > 0 && !validatePDFFile(suratLamaranInput, 'Surat Lamaran')) {
+            if (suratLamaranInput.files.length > 0 && !validateAnyFile(suratLamaranInput)) {
                 isValid = false;
             }
 

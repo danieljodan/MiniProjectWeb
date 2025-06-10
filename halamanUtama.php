@@ -76,9 +76,11 @@ $result = mysqli_query($conn, $sql);
         <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
-        </h1>        <nav>
-            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
-                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($_SESSION['email']); ?></span>
+        </h1>        <nav>            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                <?php 
+                    $username = explode('@', $_SESSION['email'])[0];
+                ?>
+                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($username); ?></span>
                 <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
             <?php else: ?>
                 <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
