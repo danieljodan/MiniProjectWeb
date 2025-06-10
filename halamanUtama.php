@@ -8,30 +8,15 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    
-    <!-- <header>
-        <h1>
-            <a href="/">SahabatKarier</a>
-        </h1>
-        <nav class="navbar">
-            <ul>
-                <li><a href="/">Beranda</a></li>
-                <li><a href="detailPekerjaan.html">Detail Pekerjaan</a></li>
-            </ul>
-        </nav>
-        <div>
-            <a href="/">Login</a>
-        </div>
-    </header> -->
 
     <header>
-        <a href ="halamanUtama.html"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
+        <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
-            <a href="halamanUtama.html">SahabatKarier</a>
+            <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
-            <a id="Register" href="halamanRegister.html"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.html"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
 
@@ -85,7 +70,7 @@
                 <h2>Lowongan Pekerjaan</h2>
                 <ul>
                     <li class="job-card">
-                        <a href="halamanDetail.html">
+                        <a href="halamanDetail.php">
                             <div>
                                 <img src="image/PTEsha.png" alt="Esha Parama Technology">
                             </div>
@@ -104,7 +89,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="halamanDetailAside.html">
+                        <a href="halamanDetailAside.php">
                             <div>
                                 <img src="image/PTTechTiera.webp" alt="PT TechTiera Services Indonesia">
                             </div>
@@ -123,7 +108,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="Sales_KaryaDelitama.html"> 
+                        <a href="Sales_KaryaDelitama.php"> 
                             <div>
                                 <img src="image/PTKaryaDelitama.webp" alt="PT Karya Delitama">
                             </div>
@@ -142,7 +127,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.html">
+                        <a href="NetworkSecurityEngineer_Esha.php">
                             <div>
                                 <img src="image/YayasanEnamPeduliPendidikan.webp" alt="Yayasan Enam Peduli Pendidikan">
                             </div>
@@ -161,7 +146,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.html">
+                        <a href="NetworkSecurityEngineer_Esha.php">
                             <div>
                                 <img src="image/GaneshaOperationAbianbase.webp" alt="Ganesha Operation Abianbase">
                             </div>
@@ -180,7 +165,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.html">
+                        <a href="NetworkSecurityEngineer_Esha.php">
                             <div>
                                 <img src="image/AltPerfumery.webp" alt="Alt Perfumery">
                             </div>
@@ -199,7 +184,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.html">
+                        <a href="NetworkSecurityEngineer_Esha.php">
                             <div>
                                 <img src="image/FundoIndonesia.webp" alt="Fundo Indonesia">
                             </div>
@@ -218,7 +203,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.html">
+                        <a href="NetworkSecurityEngineer_Esha.php">
                             <div>
                                 <img src="image/YayasanPendidikanSmartIndonesia.webp" alt="Yayasan Pendidikan Smart Indonesia">
                             </div>
@@ -238,7 +223,7 @@
                     </li>
                 </ul>
                 <!-- <div>
-                    <a href="halamanDetail.html">
+                    <a href="halamanDetail.php">
                         <span>Load More</span>
                     </a>
                 </div> -->

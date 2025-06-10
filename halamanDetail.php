@@ -9,13 +9,13 @@
 </head>
 <body>
     <header>
-        <a href ="halamanUtama.html"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
+        <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
-            <a href="halamanUtama.html">SahabatKarier</a>
+            <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
-            <a id="Register" href="halamanRegister.html"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.html"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
     <main>
@@ -32,7 +32,7 @@
             </section>
             <div class="OpsiDaftar">
                 <div class="Lamaran">
-                    <a href="halamanPengajuan.html">Lamar Pekerjaan</a>
+                    <a href="halamanPengajuan.php">Lamar Pekerjaan</a>
                 </div>
                 <div class="Share">
                     <a href="#"><i class='bx bxs-share-alt'>&ThickSpace;</i>Share</a>
@@ -80,7 +80,7 @@
             <section class="job-list">
                 <ul>
                     <li class="job-card">
-                        <a href="halamanDetailAside.html">
+                        <a href="halamanDetailAside.php">
                             <div>
                                 <img src="image/Logo_TechTiera.jpg" alt="Esha Parama Technology">
                             </div>
@@ -96,7 +96,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="halamanDetailAside.html">
+                        <a href="halamanDetailAside.php">
                             <div>
                                 <img src="image/GaneshaOperationAbianbase.webp" alt="GaneshaOperation">
                             </div>
@@ -112,7 +112,7 @@
                         </a>
                     </li>
                     <li class="job-card">
-                        <a href="halamanDetailAside.html">
+                        <a href="halamanDetailAside.php">
                             <div>
                                 <img src="image/YayasanEnamPeduliPendidikan.webp" alt="YayasanEnamPeduliPendidikan">
                             </div>

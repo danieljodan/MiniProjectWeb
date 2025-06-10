@@ -9,13 +9,13 @@
 </head>
 <body>
     <header>
-        <a href ="halamanUtama.html"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
+        <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
-            <a href="halamanUtama.html">SahabatKarier</a>
+            <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
-            <a id="Register" href="halamanRegister.html"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.html"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
     <main>
@@ -23,14 +23,14 @@
             <section class="login">
                 <h2>Masuk</h2>
                 <p>Masuk ke Sahabat Karier Untuk Melanjutkan</p>
-                <form action="halamanUtama.html" method="get">
+                <form action="halamanUtama.php" method="get">
                     <p><label for="emailID">Alamat Email: </label></p>
                     <p><input type="email" name="email" id="emailID" maxlength="100" required></p>
                     <p><label for="passwordID">Kata Sandi: </label></p>
                     <p><input type="password" name="password" id="passwordID" maxlength="100" required></p>
                     <a href="#" class="forget">Lupa Password?</a>
                     <p><input type="submit" value="Login"></p>
-                    <p class="daftar">Belum punya akun?<a href="halamanRegister.html">Daftar Sekarang</a></p>
+                    <p class="daftar">Belum punya akun?<a href="halamanRegister.php">Daftar Sekarang</a></p>
                 </form>
             </section>
         </div>

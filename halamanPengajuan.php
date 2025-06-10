@@ -15,13 +15,13 @@
 
 <body>
     <header>
-        <a href ="halamanUtama.html"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
+        <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
-            <a href="halamanUtama.html">SahabatKarier</a>
+            <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
-            <a id="Register" href="halamanRegister.html"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.html"><i class='bx bxs-user-circle'>&ThickSpace;</i>Login</a>
+            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
 
@@ -36,7 +36,7 @@
             </section>
             <div class="OpsiDaftar">
                 <div class="Lamaran">
-                    <a href="halamanDetail.html">Lihat deskripsi pekerjaan</a>
+                    <a href="halamanDetail.php">Lihat deskripsi pekerjaan</a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <!--------------------------------------------------------------- FORMULIR --------------------------------------------------------------->
         <section class="container">
             <h2 class="form-lamaran">Formulir Lamaran</h2>
-            <form action="submit.html" method="get" class="form">
+            <form action="submit.php" method="get" class="form">
                 <div class="input-box">
                     <label>Nama Lengkap</label>
                     <input type="text" placeholder="Masukkan nama lengkap anda" required />
