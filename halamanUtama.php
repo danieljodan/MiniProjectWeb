@@ -1,3 +1,47 @@
+<?php
+// koneksi ke database
+include "koneksi.php";
+
+$keyword = $_GET['keyword'] ?? '';
+$alamat = $_GET['alamat'] ?? '';
+$kategori = $_GET['kategori'] ?? '';
+$jenis = $_GET['jenis'] ?? '';
+$gaji_min = $_GET['gaji_minimum'] ?? '';
+$gaji_max = $_GET['gaji_maksimum'] ?? '';
+
+$sql = "SELECT pekerjaan.judul_pekerjaan, pekerjaan.kategori, pekerjaan.gaji_minimum, pekerjaan.gaji_maksimum, pekerjaan.jenis_pekerjaan, perusahaan.nama_perusahaan, perusahaan.logo_path, perusahaan.alamat FROM pekerjaan JOIN perusahaan ON pekerjaan.id_perusahaan = perusahaan.id_perusahaan WHERE pekerjaan.tanggal_deadline > CURDATE()";
+
+// Filter pencarian
+if (!empty($keyword)) {
+    $keyword = mysqli_real_escape_string($conn, $keyword);
+    $sql .= " AND (pekerjaan.judul_pekerjaan LIKE '%$keyword%' OR perusahaan.nama_perusahaan LIKE '%$keyword%')";
+}
+if (!empty($alamat)) {
+    $alamat = mysqli_real_escape_string($conn, $alamat);
+    $sql .= " AND perusahaan.alamat LIKE '%$alamat%'";
+}
+if (!empty($kategori)) {
+    $kategori = mysqli_real_escape_string($conn, $kategori);
+    $sql .= " AND pekerjaan.kategori = '$kategori'";
+}
+if (!empty($jenis)) {
+    $jenis = mysqli_real_escape_string($conn, $jenis);
+    $sql .= " AND pekerjaan.jenis_pekerjaan = '$jenis'";
+}
+if (!empty($gaji_min)) {
+    $gaji_min = (int) $gaji_min;
+    $sql .= " AND pekerjaan.gaji_minimum >= $gaji_min";
+}
+if (!empty($gaji_max)) {
+    $gaji_max = (int) $gaji_max;
+    $sql .= " AND pekerjaan.gaji_maksimum <= $gaji_max";
+}
+
+$sql .= " ORDER BY pekerjaan.tanggal_uploud DESC";
+
+$result = mysqli_query($conn, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,41 +69,41 @@
             <section class="search-container">
                 <form action="" method="GET">
                     <div class="search-row">
-                        <input type="text" placeholder="Cari nama pekerjaan atau perusahaan">
-                        <input type="text" placeholder="Lokasi">
+                        <input type="text" name="keyword" placeholder="Cari nama pekerjaan atau perusahaan">
+                        <input type="text" name="alamat" placeholder="Lokasi">
                         <button type="submit">Cari</button>
                     </div>
 
                     <div class="filter-row">
-                        <select>
+                        <select name="kategori">
                             <option value="" disabled selected>Kategori Pekerjaan</option>
                             <option value="">Keuangan</option>
                             <option value="">Pemasaran</option>
                             <option value="">Pendidikan</option>
                             <option value="">Teknologi Informasi</option>
                         </select>
-                        <select>
+                        <select name="jenis">
                             <option value="" disabled selected>Jenis Pekerjaan</option>
-                            <option value="">Full-time</option>
-                            <option value="">Part-time</option>
-                            <option value="">Remote</option>
-                            <option value="">Freelance</option>
+                            <option value="Full Time">Full-time</option>
+                            <option value="Part Time">Part-time</option>
+                            <option value="Remote">Remote</option>
+                            <option value="Freelance">Freelance</option>
                         </select>
-                        <select name="" id="">
-                            <option label="Gaji Rp 0">0</option>
-                            <option value="">2 juta</option>
-                            <option value="">4 juta</option>
-                            <option value="">6 juta</option>
-                            <option value="">8 juta</option>
-                            <option value="">10 juta</option>
+                        <select name="gaji_minimum" id="">
+                            <option label="Gaji Rp 0" value="0">0</option>
+                            <option value="2000000">2 juta</option>
+                            <option value="4000000">4 juta</option>
+                            <option value="6000000">6 juta</option>
+                            <option value="8000000">8 juta</option>
+                            <option value="10000000">10 juta</option>
                         </select>
-                        <select name="" id="">
+                        <select name="gaji_maksimum" id="">
                             <option label="hingga Rp 10 juta"> 0</option>
-                            <option value="">2 juta</option>
-                            <option value="">4 juta</option>
-                            <option value="">6 juta</option>
-                            <option value="">8 juta</option>
-                            <option value="">10 juta</option>
+                            <option value="2000000">2 juta</option>
+                            <option value="4000000">4 juta</option>
+                            <option value="6000000">6 juta</option>
+                            <option value="8000000">8 juta</option>
+                            <option value="10000000">10 juta</option>
                         </select>
                     </div>
                     
@@ -69,158 +113,37 @@
             <section class="job-list">
                 <h2>Lowongan Pekerjaan</h2>
                 <ul>
-                    <li class="job-card">
-                        <a href="halamanDetail.php">
-                            <div>
-                                <img src="image/PTEsha.png" alt="Esha Parama Technology">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Network Security Engineer</h3>
-                                <h4 class="perusahaan-loker">PT Esha Parama Technology</h4>
-                                <p class="lokasi-loker">Jakarta Selatan, DKI Jakarta</p>
-                                <div class="gaji">
-                                    <span>Rp 6 juta - 7.5 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Teknologi Informasi</span>
-                                    <span class="badge badge-jenis">Penuh Waktu</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="halamanDetailAside.php">
-                            <div>
-                                <img src="image/PTTechTiera.webp" alt="PT TechTiera Services Indonesia">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Cyber Security Consultant</h3>
-                                <h4 class="perusahaan-loker">PT TechTiera Services Indonesia</h3>
-                                <p class="lokasi-loker">Jakarta Selatan, DKI Jakarta</p>
-                                <div class="gaji">
-                                    <span>Rp 15 juta - 20 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Teknologi Informasi</span>
-                                    <span class="badge badge-jenis">Penuh Waktu</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="Sales_KaryaDelitama.php"> 
-                            <div>
-                                <img src="image/PTKaryaDelitama.webp" alt="PT Karya Delitama">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Sales</h3>
-                                <h4 class="perusahaan-loker">PT Karya Delitama</h4>
-                                <p class="lokasi-loker">Tangerang, Banten</p>
-                                <div class="gaji">
-                                    <span>Rp 4 juta - 5 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Pemasaran</span>
-                                    <span class="badge badge-jenis">Penuh Waktu</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.php">
-                            <div>
-                                <img src="image/YayasanEnamPeduliPendidikan.webp" alt="Yayasan Enam Peduli Pendidikan">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Dosen Perguruan Tinggi</h3>
-                                <h4 class="perusahaan-loker">Yayasan Enam Peduli Pendidikan</h4>
-                                <p class="lokasi-loker">Cibitung, Jawa Barat</p>
-                                <div class="gaji">
-                                    <span>Rp 5 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Pendidikan</span>
-                                    <span class="badge badge-jenis">Penuh Waktu</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.php">
-                            <div>
-                                <img src="image/GaneshaOperationAbianbase.webp" alt="Ganesha Operation Abianbase">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Pengajar Informatika</h3>
-                                <h4 class="perusahaan-loker">Ganesha Operation Abianbase</h4>
-                                <p class="lokasi-loker">Mengwi, Bali</p>
-                                <div class="gaji">
-                                    <span>Rp 1 juta - 2 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Pendidikan</span>
-                                    <span class="badge badge-jenis">Paruh Waktu</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.php">
-                            <div>
-                                <img src="image/AltPerfumery.webp" alt="Alt Perfumery">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Admin Accounting</h3>
-                                <h4 class="perusahaan-loker">Alt Perfumery</h4>
-                                <p class="lokasi-loker">Jakarta Barat, DKI Jakarta</p>
-                                <div class="gaji">
-                                    <span>Rp 3.5 juta - 5 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Keuangan</span>
-                                    <span class="badge badge-jenis">Remote</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.php">
-                            <div>
-                                <img src="image/FundoIndonesia.webp" alt="Fundo Indonesia">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Host Live</h3>
-                                <h4 class="perusahaan-loker">Fundo Indonesia</h4>
-                                <p class="lokasi-loker">Jakarta Selatan, DKI Jakarta</p>
-                                <div class="gaji">
-                                    <span>Rp 3 juta - 6 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Pemasaran</span>
-                                    <span class="badge badge-jenis">Freelance</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="NetworkSecurityEngineer_Esha.php">
-                            <div>
-                                <img src="image/YayasanPendidikanSmartIndonesia.webp" alt="Yayasan Pendidikan Smart Indonesia">
-                            </div>
-                            <div>
-                                <h3 class="nama-pekerjaan">Guru English</h3>
-                                <h4 class="perusahaan-loker">Yayasan Pendidikan Smart Indonesia</h4>
-                                <p class="lokasi-loker">Bekasi, Jawa Barat</p>
-                                <div class="gaji">
-                                    <span>Rp 1.5 juta - 3 juta</span>
-                                </div>
-                                <div class="info-pekerjaan">
-                                    <span class="badge badge-kategori">Pendidikan</span>
-                                    <span class="badge badge-jenis">Penuh Waktu</span>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
+                    <?php
+                        $count = mysqli_num_rows($result);
+                        if ($count > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <li class="job-card">
+                                <a href="halamanDetail.php">
+                                    <div>
+                                        <img src="<?= htmlspecialchars($row['logo_path']) ?>" alt="<?= htmlspecialchars($row['nama_perusahaan']) ?>">
+                                    </div>
+                                    <div>
+                                        <h3 class="nama-pekerjaan"><?= htmlspecialchars($row['judul_pekerjaan']) ?></h3>
+                                        <h4 class="perusahaan-loker"><?= htmlspecialchars($row['nama_perusahaan']) ?></h4>
+                                        <p class="lokasi-loker"><?= htmlspecialchars($row['alamat']) ?></p>
+                                        <div class="gaji">
+                                            <span>Rp <?= number_format($row['gaji_minimum'], 0, ',', '.') ?> - <?= number_format($row['gaji_maksimum'], 0, ',', '.') ?></span>
+                                        </div>
+                                        <div class="info-pekerjaan">
+                                            <span class="badge badge-kategori"><?= htmlspecialchars($row['kategori']) ?></span>
+                                            <span class="badge badge-jenis"><?= htmlspecialchars($row['jenis_pekerjaan']) ?></span>
+                                        </div> 
+                                    </div>
+                                </a>
+                            </li>
+                            <?php
+                            }
+                        } else {
+                            echo '<li class="search-not-found" style="display:none;"></li>';
+                        }
+                        
+                    ?>
                 </ul>
                 <!-- <div>
                     <a href="halamanDetail.php">
@@ -257,6 +180,18 @@
         </div>
     </footer>
 
-
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const pencarianKosong = document.querySelector('.search-not-found');
+    if (pencarianKosong) {
+        const pesan = document.createElement('p');
+        pesan.textContent = "Hasil Pencarian Tidak ditemukan";
+        pesan.style.color = "red";
+        pesan.style.textAlign = "center";
+        pesan.style.display = "block"
+        document.querySelector('.job-list ul').appendChild(pesan);
+    }
+});
+</script>
 </body>
 </html>
