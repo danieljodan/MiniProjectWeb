@@ -48,6 +48,8 @@
 <?php
     require_once "koneksi.php";
 
+    session_start();
+    
     $email = $_POST["email"];
     $password = $_POST["password"];
 
@@ -55,6 +57,14 @@
         $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
         $result = mysqli_query($conn, $sql);
         if (mysqli_num_rows($result) > 0) {
+            // Ambil data user per baris
+            $user = mysqli_fetch_assoc($result);
+
+            //Simpan dalam session
+            $_SESSION['user_id'] = $user['id_users'];
+            $_SESSION['role'] = $user['role'];
+
+            // Redirect ke halaman utama
             echo "<script>
             alert('Login Berhasil!');
             window.location.href = 'halamanUtama.php';

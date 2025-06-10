@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: halamanLogin.php');
+    exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -10,7 +18,6 @@
 </head>
 
 <!--------------------------------------------------------------- HEADER --------------------------------------------------------------->
-
 
 
 <body>

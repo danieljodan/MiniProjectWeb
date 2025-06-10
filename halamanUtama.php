@@ -2,6 +2,12 @@
 // koneksi ke database
 include "koneksi.php";
 
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: halamanLogin.php');
+exit;
+}
+
 $keyword = $_GET['keyword'] ?? '';
 $alamat = $_GET['alamat'] ?? '';
 $kategori = $_GET['kategori'] ?? '';
