@@ -3,28 +3,6 @@
 require_once "koneksi.php";
 
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: halamanLogin.php');
-exit;
-}
-
-$role = $_SESSION['role'];
-if ($role = 'jobseeker') {
-    echo "<script>";
-    echo "document.getElementById('Dashboard').style.display = inline";
-    echo "document.getElementById('Logout').style.display = inline";
-    echo "document.getElementById('Register').style.display = none";
-    echo "document.getElementById('Login').style.display = none";
-    echo "</script>";
-}
-if ($role = 'company') {
-    echo "<script>";
-    echo "document.getElementById('kelolaLowongan').style.display = inline";
-    echo "document.getElementById('Logout').style.display = inline";
-    echo "document.getElementById('Register').style.display = none";
-    echo "document.getElementById('Login').style.display = none";
-    echo "</script>";
-}
 
 $keyword = $_GET['keyword'] ?? '';
 $alamat = $_GET['alamat'] ?? '';
@@ -83,14 +61,33 @@ $result = mysqli_query($conn, $sql);
             <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
-            <a id="Dashboard" href="halamanDashboard.php" style="display: none;"><i class='bx bx-home-alt-2'> &ThickSpace;</i>Dashboard</a>
-            <a id="kelolaLowongan" href="halamanPengelolaanLowongan.php" style="display: none;"><i class='bx bx-buildings'> &ThickSpace;</i>Kelola Lowongan</a>
-            <a id="Logout" href="halamanLogin.php" style="display: none;"><i class='bx bx-log-out'> &ThickSpace;</i>Logout</a>
+            <a id="Dashboard" href="halamanDashboard.php" style="display: none;"><i class='bx bx-home-alt-2'>&ThickSpace;</i>Dashboard</a>
+            <a id="kelolaLowongan" href="halamanPengelolaanLowongan.php" style="display: none;"><i class='bx bx-buildings'>&ThickSpace;</i>Kelola Lowongan</a>
+            <a id="Logout" href="halamanLogin.php" style="display: none;"><i class='bx bx-log-out'>&ThickSpace;</i>Logout</a>
             <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
             <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
+    <?php
+        if (isset($_SESSION['user_id'])) {
+            $role = $_SESSION['role'];
+            echo "<script>";
+            if ($role === 'jobseeker') {
+                echo "document.getElementById('Dashboard').style.display = 'inline';";
+            }
+            if ($role === 'company') {
+                echo "document.getElementById('kelolaLowongan').style.display = 'inline';";
+            }
 
+            // Logout selalu muncul untuk yang login
+            echo "document.getElementById('Logout').style.display = 'inline';";
+
+            // Sembunyikan Register/Login
+            echo "document.getElementById('Register').style.display = 'none';";
+            echo "document.getElementById('Login').style.display = 'none';";
+            echo "</script>";
+            }
+    ?>
     <main>
         <article>
             <section class="search-container">

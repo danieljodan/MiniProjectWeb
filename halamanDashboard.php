@@ -22,6 +22,7 @@ $result = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <header>
@@ -30,7 +31,7 @@ $result = mysqli_query($conn, $sql);
             <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
-            <a id="Dashboard" href="halamanDashboard.php"><i class='bx bx-home-alt-2' > &ThickSpace;</i>Dashboard</a>
+            <a id="Dashboard" href="halamanDashboard.php"><i class='bx bx-home-alt-2'>&ThickSpace;</i>Dashboard</a>
             <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
             <!-- <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
             <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a> -->
