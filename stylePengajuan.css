@@ -262,6 +262,47 @@ body {
     margin-top: 0%;
 }
 
+.file-error {
+    color: #d63031;
+    font-size: small;
+    margin-top: 5px;
+    display: none;
+}
+
+.file-success {
+    color: #00b894;
+    font-size: small;
+    margin-top: 5px;
+    display: none;
+}
+
+.file-input-error {
+    border: 2px solid #d63031 !important;
+}
+
+.input-error {
+    border: 2px solid #d63031 !important;
+}
+
+.field-error {
+    color: #d63031;
+    font-size: small;
+    margin-top: 5px;
+    display: none;
+}
+
+/* Shake animation for invalid fields */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Smooth scroll behavior for the entire page */
+html {
+    scroll-behavior: smooth;
+}
+
 .form button {
     margin-top: 20px;
     height: 50px;

@@ -1,11 +1,28 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: halamanLogin.php');
-    exit;
-    }
-?>
+session_start();
+include 'koneksi.php';
 
+// Ambil ID pekerjaan dari URL
+$id_pekerjaan = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+
+// Query untuk mengambil data pekerjaan
+$sql = "SELECT p.*, pr.nama_perusahaan, pr.logo_path 
+        FROM pekerjaan p 
+        JOIN perusahaan pr ON p.id_perusahaan = pr.id_perusahaan 
+        WHERE p.id_pekerjaan = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_pekerjaan);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $job = $result->fetch_assoc();
+} else {
+    echo "Pekerjaan tidak ditemukan!";
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -14,10 +31,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="stylePengajuan.css">
-    <title>Halaman Pengajuan</title>
+    <title>Halaman Pengajuan - <?php echo htmlspecialchars($job['judul_pekerjaan']); ?></title>
 </head>
 
 <!--------------------------------------------------------------- HEADER --------------------------------------------------------------->
+
 
 
 <body>
@@ -25,25 +43,27 @@
         <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
-        </h1>
-        <nav>
-            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+        </h1>        <nav>
+            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($_SESSION['email']); ?></span>
+                <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
+            <?php else: ?>
+                <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+                <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+            <?php endif; ?>
         </nav>
     </header>
 
-    <main>
-        <div class="shadow">
+    <main>        <div class="shadow">
             <section class="ProfilPerusahaan">
                 <h5>Anda sedang melamar untuk:</h5>
-                <img src="image/PTEsha.png" alt="PTEshaParama" width="100px">
-                <h2>Network Security Engineer</h2>
-                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i>PT Esha Parama
-                    Teknologi</p>
+                <img src="<?php echo htmlspecialchars($job['logo_path']); ?>" alt="<?php echo htmlspecialchars($job['nama_perusahaan']); ?>" width="100px">
+                <h2><?php echo htmlspecialchars($job['judul_pekerjaan']); ?></h2>
+                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['nama_perusahaan']); ?></p>
             </section>
             <div class="OpsiDaftar">
                 <div class="Lamaran">
-                    <a href="halamanDetail.php">Lihat deskripsi pekerjaan</a>
+                    <a href="halamanDetail.php?id=<?php echo $job['id_pekerjaan']; ?>">Kembali ke Detail</a>
                 </div>
             </div>
         </div>
@@ -51,45 +71,321 @@
 
         <!--------------------------------------------------------------- FORMULIR --------------------------------------------------------------->
         <section class="container">
-            <h2 class="form-lamaran">Formulir Lamaran</h2>
-            <form action="submit.php" method="get" class="form">
-                <div class="input-box">
-                    <label>Nama Lengkap</label>
-                    <input type="text" placeholder="Masukkan nama lengkap anda" required />
+            <h2 class="form-lamaran">Formulir Lamaran</h2>            <form action="submit.php" method="post" class="form" enctype="multipart/form-data">
+                <input type="hidden" name="id_pekerjaan" value="<?php echo $job['id_pekerjaan']; ?>">                <div class="input-box">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama_lengkap" placeholder="Masukkan nama lengkap anda" />
+                    <p id="nama-error" class="field-error"></p>
                 </div>
                 <div class="input-box">
-                    <label>Tanggal Lahir</label>
-                        <input type="date" min="1900-01-01" max="2025-03-26" required />
+                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                    <input type="date" id="tanggal_lahir" name="tanggal_lahir" min="1900-01-01" max="2025-06-10" />
+                    <p id="tanggal_lahir-error" class="field-error"></p>
+                </div>                <div class="input-box">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" value="<?php echo isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : ''; ?>" placeholder="Masukkan e-mail anda" <?php echo isset($_SESSION['email']) ? 'readonly' : ''; ?> />
+                    <p id="email-error" class="field-error"></p>
                 </div>
                 <div class="input-box">
-                    <label>E-mail</label>
-                        <input type="email" placeholder="Masukkan e-mail anda" required />
+                    <label for="telepon">Nomor HP</label>
+                    <input type="tel" id="telepon" name="no_telepon" placeholder="Masukkan nomor HP anda" pattern="[0-9]+" />
+                    <p id="telepon-error" class="field-error"></p>
+                </div><div class="input-box">
+                    <label for="cv">CV</label>
+                    <input id="cv" name="cv" type="file" accept=".pdf" />
+                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
+                    <p id="cv-error" class="file-error"></p>
                 </div>
                 <div class="input-box">
-                    <label>Nomor HP</label>
-                        <input type="tel" placeholder="Masukkan nomor HP anda" name="nomor_hp" pattern="[0-9]+"
-                            required />
+                    <label for="portofolio">Portofolio <span id="Opsional"> (Opsional) </span></label>
+                    <input id="portofolio" name="portofolio" type="file" accept=".pdf" />
+                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
+                    <p id="portofolio-error" class="file-error"></p>
                 </div>
                 <div class="input-box">
-                    <label>CV</label>
-                        <input id="CV" type="file" accept=".pdf" required />
-                        <p id="format_file">Format file yang diterima: pdf</p>
-                </div>
-                <div class="input-box">
-                    <label>Portofolio <span id="Opsional"> (Opsional) </span></label>
-                        <input id="Portofolio" type="file" accept=".pdf" />
-                        <p id="format_file">Format file yang diterima: pdf</p>
-                </div>
-                <div class="input-box">
-                    <label>Surat Lamaran<span id="Opsional"> (Opsional) </span></label>
-                        <input id="Portofolio" type="file" />
-                        <p id="format_file"></p>
+                    <label for="surat_lamaran">Surat Lamaran<span id="Opsional"> (Opsional) </span></label>
+                    <input id="surat_lamaran" name="surat_lamaran" type="file" accept=".pdf" />
+                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
+                    <p id="surat_lamaran-error" class="file-error"></p>
                 </div>
 
-                <button>Kirim Lamaran</button>
-            </form>
-        </section>
-    </main>
+                <button type="submit">Kirim Lamaran</button>
+            </form>        </section>
+    </main>    <script>        // Function to show field error
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            
+            field.classList.add('input-error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Function to clear field validation
+        function clearFieldValidation(fieldId) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            
+            field.classList.remove('input-error');
+            errorElement.style.display = 'none';
+        }        // Function to scroll to first invalid field with smooth animation
+        function scrollToFirstInvalidField() {
+            const invalidFields = document.querySelectorAll('.input-error, .file-input-error');
+            
+            if (invalidFields.length > 0) {
+                const targetField = invalidFields[0];
+                const fieldRect = targetField.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                
+                // Calculate position to center the field in viewport
+                const targetPosition = window.pageYOffset + fieldRect.top - (viewportHeight / 2) + (fieldRect.height / 2);
+                
+                // Smooth scroll animation to center the field
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Add a small delay then focus and highlight the field
+                setTimeout(() => {
+                    // Try to focus the field, but don't rely on it for readonly fields
+                    try {
+                        if (!targetField.readOnly && !targetField.disabled) {
+                            targetField.focus();
+                        }
+                    } catch (e) {
+                        // Focus failed, continue with animation
+                    }
+                    
+                    // Add a gentle shake animation to draw attention (works for all fields)
+                    targetField.style.animation = 'shake 0.5s ease-in-out';
+                    
+                    // Remove animation after it completes
+                    setTimeout(() => {
+                        targetField.style.animation = '';
+                    }, 500);
+                }, 600); // Wait for scroll to nearly complete
+            }
+        }
+        
+        // Validate individual fields
+        function validateField(fieldId) {
+            const field = document.getElementById(fieldId);
+            const value = field.value.trim();
+            
+            switch(fieldId) {
+                case 'nama':
+                    if (!value) {
+                        showFieldError(fieldId, 'Nama lengkap wajib diisi');
+                        return false;
+                    } else if (value.length < 2) {
+                        showFieldError(fieldId, 'Nama lengkap minimal 2 karakter');
+                        return false;
+                    } else {
+                        clearFieldValidation(fieldId);
+                        return true;
+                    }
+                    
+                case 'tanggal_lahir':
+                    if (!value) {
+                        showFieldError(fieldId, 'Tanggal lahir wajib diisi');
+                        return false;
+                    } else {
+                        const birthDate = new Date(value);
+                        const today = new Date();
+                        const age = today.getFullYear() - birthDate.getFullYear();
+                        
+                        if (age < 17) {
+                            showFieldError(fieldId, 'Usia minimal 17 tahun');
+                            return false;
+                        } else if (age > 65) {
+                            showFieldError(fieldId, 'Usia maksimal 65 tahun');
+                            return false;
+                        } else {
+                            clearFieldValidation(fieldId);
+                            return true;
+                        }
+                    }                case 'email':
+                    // For readonly fields (logged in users), ensure they're always valid
+                    // but don't skip them from wiggle effect if somehow they have error class
+                    if (field.readOnly && value) {
+                        clearFieldValidation(fieldId);
+                        return true;
+                    }
+                    
+                    if (!value) {
+                        showFieldError(fieldId, 'Email wajib diisi');
+                        return false;
+                    } else if (!field.checkValidity()) {
+                        showFieldError(fieldId, 'Format email tidak valid');
+                        return false;
+                    } else {
+                        clearFieldValidation(fieldId);
+                        return true;
+                    }
+                    
+                case 'telepon':
+                    if (!value) {
+                        showFieldError(fieldId, 'Nomor HP wajib diisi');
+                        return false;
+                    } else if (!/^[0-9]{10,15}$/.test(value)) {
+                        showFieldError(fieldId, 'Nomor HP harus berisi 10-15 digit angka');
+                        return false;
+                    } else {
+                        clearFieldValidation(fieldId);
+                        return true;
+                    }
+                    
+                default:
+                    return true;
+            }
+        }
+
+        // File validation function
+        function validatePDFFile(fileInput, fieldName) {
+            const file = fileInput.files[0];
+            const inputId = fileInput.id;
+            const errorElement = document.getElementById(`${inputId}-error`);
+            
+            // Hide previous messages and reset visual feedback
+            errorElement.style.display = 'none';
+            fileInput.classList.remove('file-input-error');
+            
+            if (!file) return true; // No file selected, skip validation
+            
+            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+            const allowedTypes = ['application/pdf'];
+            
+            // Check file size
+            if (file.size > maxSize) {
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                errorElement.textContent = `File terlalu besar (${fileSizeMB}MB). Maksimal 5MB.`;
+                errorElement.style.display = 'block';
+                fileInput.classList.add('file-input-error');
+                fileInput.value = ''; // Clear the input
+                return false;
+            }
+            
+            // Check file type
+            if (!allowedTypes.includes(file.type)) {
+                errorElement.textContent = `File harus PDF.`;
+                errorElement.style.display = 'block';
+                fileInput.classList.add('file-input-error');
+                fileInput.value = ''; // Clear the input
+                return false;
+            }
+            
+            // Check file extension
+            const fileName = file.name.toLowerCase();
+            if (!fileName.endsWith('.pdf')) {
+                errorElement.textContent = `File harus memiliki ekstensi .pdf`;
+                errorElement.style.display = 'block';
+                fileInput.classList.add('file-input-error');
+                fileInput.value = ''; // Clear the input
+                return false;
+            }
+            
+            // File is valid - no visual feedback needed
+            return true;
+        }          // Add event listeners for real-time validation on regular input fields
+        ['nama', 'tanggal_lahir', 'email', 'telepon'].forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            
+            // Validate on blur (when user leaves the field)
+            field.addEventListener('blur', function() {
+                validateField(fieldId);
+            });
+            
+            // Clear validation styling when user starts typing
+            field.addEventListener('input', function() {
+                clearFieldValidation(fieldId);
+            });
+        });
+          // Add event listeners for file inputs
+        document.getElementById('cv').addEventListener('change', function() {
+            validatePDFFile(this, 'CV');
+        });
+        
+        // Add blur event for CV to show feedback when user clicks away without selecting file
+        document.getElementById('cv').addEventListener('blur', function() {
+            if (this.files.length === 0) {
+                const errorElement = document.getElementById('cv-error');
+                errorElement.textContent = 'CV wajib diupload';
+                errorElement.style.display = 'block';
+                this.classList.add('file-input-error');
+            }
+        });
+        
+        // Clear CV error when user clicks on the file input
+        document.getElementById('cv').addEventListener('click', function() {
+            const errorElement = document.getElementById('cv-error');
+            errorElement.style.display = 'none';
+            this.classList.remove('file-input-error');
+        });
+        
+        document.getElementById('portofolio').addEventListener('change', function() {
+            validatePDFFile(this, 'Portofolio');
+        });
+        
+        document.getElementById('surat_lamaran').addEventListener('change', function() {
+            validatePDFFile(this, 'Surat Lamaran');
+        });
+        
+        // Form submission validation
+        document.querySelector('.form').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Validate all regular fields
+            ['nama', 'tanggal_lahir', 'email', 'telepon'].forEach(fieldId => {
+                if (!validateField(fieldId)) {
+                    isValid = false;
+                }
+            });
+            
+            // Validate file inputs
+            const cvInput = document.getElementById('cv');
+            const portofolioInput = document.getElementById('portofolio');
+            const suratLamaranInput = document.getElementById('surat_lamaran');
+              // Validate CV (required)
+            if (cvInput.files.length === 0) {
+                const errorElement = document.getElementById('cv-error');
+                errorElement.textContent = 'CV wajib diupload';
+                errorElement.style.display = 'block';
+                cvInput.classList.add('file-input-error');
+                isValid = false;
+            } else if (!validatePDFFile(cvInput, 'CV')) {
+                isValid = false;
+            }
+            
+            // Validate optional files if they are selected
+            if (portofolioInput.files.length > 0 && !validatePDFFile(portofolioInput, 'Portofolio')) {
+                isValid = false;
+            }
+            
+            if (suratLamaranInput.files.length > 0 && !validatePDFFile(suratLamaranInput, 'Surat Lamaran')) {
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission
+                scrollToFirstInvalidField(); // Scroll to first invalid field
+                return false;
+            }
+            
+            return true;
+        });
+        
+        // Remove error styling when user clicks on file input to try again
+        document.querySelectorAll('input[type="file"]').forEach(function(input) {
+            input.addEventListener('click', function() {
+                this.classList.remove('file-input-error');
+                const errorElement = document.getElementById(`${this.id}-error`);
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 
 <!--------------------------------------------------------------- FOOTER --------------------------------------------------------------->
