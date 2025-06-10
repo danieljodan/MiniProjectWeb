@@ -34,7 +34,7 @@ header h1 {
     flex-basis: 40%;
 }
 
-header h1 a {
+header h1 p {
     text-decoration: none;
     color: white;
 }
@@ -106,8 +106,9 @@ p.login {
     color: black;
 }
 
-.register input[type="email"],
-.register input[type="password"] {
+#emailID,
+#passwordID,
+#passwordKonfirmID {
   width: 100%;
   padding: 12px;
   margin: 0px;
@@ -131,6 +132,15 @@ p.login {
 .register input[type="submit"]:hover {
     background-color: #602ec4;
     box-shadow: 0px 1px 5px grey;
+}
+
+#keteranganID {
+    font-size: 16px;
+    text-align: center;
+    margin: 0 0 0 10px;
+    color: red;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 footer p {

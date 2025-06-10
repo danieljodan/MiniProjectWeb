@@ -6,12 +6,13 @@
     <title>Sahabat Karier | Login Page</title>
     <link href="styleLogin.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="halamanRegister.js"></script>
 </head>
 <body>
     <header>
-        <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
+        <p><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></p>
         <h1>
-            <a href="halamanUtama.php">SahabatKarier</a>
+            <p>SahabatKarier</p>
         </h1>
         <nav>
             <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
@@ -23,14 +24,16 @@
             <section class="login">
                 <h2>Masuk</h2>
                 <p>Masuk ke Sahabat Karier Untuk Melanjutkan</p>
-                <form action="halamanUtama.php" method="get">
+                <form action="halamanLogin.php" method="post">
                     <p><label for="emailID">Alamat Email: </label></p>
                     <p><input type="email" name="email" id="emailID" maxlength="100" required></p>
                     <p><label for="passwordID">Kata Sandi: </label></p>
                     <p><input type="password" name="password" id="passwordID" maxlength="100" required></p>
-                    <a href="#" class="forget">Lupa Password?</a>
-                    <p><input type="submit" value="Login"></p>
+                    <p><input type="checkbox" name="showPassword" id="showPasswordID" onclick="seePassword()"><label for="showPasswordID">Show Password</label></p>
+                    <p><input type="submit" name="submit" value="Login"></p>
                     <p class="daftar">Belum punya akun?<a href="halamanRegister.php">Daftar Sekarang</a></p>
+
+                    <p id="keteranganID"></p>
                 </form>
             </section>
         </div>
@@ -40,3 +43,26 @@
     </footer>
 </body>
 </html>
+
+
+<?php
+    require_once "koneksi.php";
+
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    if (isset($_POST["submit"])) {
+        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            echo "<script>
+            alert('Login Berhasil!');
+            window.location.href = 'halamanUtama.php';
+            </script>";
+        } else {
+            echo "<script>
+                document.getElementById('keteranganID').innerHTML = 'Email atau Kata Sandi Salah!';
+            </script>";
+        }
+    }
+?>

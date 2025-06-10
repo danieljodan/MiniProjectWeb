@@ -3,11 +3,7 @@
 $host = "localhost";
 $user = "root";       // sesuaikan dengan user db Anda
 $password = "";       // sesuaikan dengan password db Anda
-$database = "miniprojectweb";  // sesuaikan dengan nama database Anda
+$database = "sahabat_karier_satu";  // sesuaikan dengan nama database Anda
 
-$conn = new mysqli($host, $user, $password, $database);
-
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+$conn = mysqli_connect($host, $user, $password, $database) or die("Koneksi gagal");
 ?>
