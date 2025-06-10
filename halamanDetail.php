@@ -2,7 +2,42 @@
     session_start();
     if (!isset($_SESSION['user_id'])) {
         header('Location: halamanLogin.php');
-    exit;
+        exit;
+    }
+    
+    include 'koneksi.php';
+    
+    // Get user's email if not already in session
+    if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
+        $user_sql = "SELECT email FROM users WHERE id_users = ?";
+        $user_stmt = $conn->prepare($user_sql);
+        $user_stmt->bind_param("i", $_SESSION['user_id']);
+        $user_stmt->execute();
+        $user_result = $user_stmt->get_result();
+        
+        if ($user_result->num_rows > 0) {
+            $user_data = $user_result->fetch_assoc();
+            $_SESSION['email'] = $user_data['email'];
+        }
+    }
+    
+    $id_pekerjaan = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+    
+    $sql = "SELECT p.*, pr.nama_perusahaan, pr.logo_path, pr.alamat as alamat_perusahaan 
+            FROM pekerjaan p 
+            JOIN perusahaan pr ON p.id_perusahaan = pr.id_perusahaan 
+            WHERE p.id_pekerjaan = ?";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_pekerjaan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $job = $result->fetch_assoc();
+    } else {
+        echo "Pekerjaan tidak ditemukan!";
+        exit;
     }
 ?>
 
@@ -11,7 +46,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahabat Karier | Detail Pekerjaan</title>
+    <title>Sahabat Karier | <?php echo htmlspecialchars($job['judul_pekerjaan']); ?></title>
     <link href="styleDetailPekerjaan.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -27,20 +62,18 @@
         </nav>
     </header>
     <main>
-        <div class="shadow">
-            <section class="ProfilPerusahaan">
-                <img src="image/PTEsha.png" alt="PTEshaParama" width="100px">
-                <h2>Network Security Engineer</h2>
-                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i>PT Esha Parama Teknologi</p>
-                <p><i class='bx bxs-map-pin'>&ThickSpace; &ThickSpace;</i>PT Esha Parama Teknologi, Kasablanka Office Tower A 26 F, Jl Casablanca Raya Kav.88, Jakarta, Jakarta Selatan 12870, Indonesia</p>
-                <p><i class='bx bx-dollar'>&ThickSpace; &ThickSpace;</i>Rp 6.000.000 - 7.500.000 / Bulan</p>
-                <p><i class='bx bx-buildings'>&ThickSpace; &ThickSpace;</i>Teknologi Informasi</p>
-                <p><i class='bx bx-time'>&ThickSpace; &ThickSpace;</i>Full Time</p>
-                <p><i class='bx bx-calendar'>&ThickSpace; &ThickSpace;</i>Tayang sejak: 3 Februari 2025</p>
-            </section>
-            <div class="OpsiDaftar">
+        <div class="shadow">            <section class="ProfilPerusahaan">
+                <img src="<?php echo htmlspecialchars($job['logo_path']); ?>" alt="<?php echo htmlspecialchars($job['nama_perusahaan']); ?>" width="100px">
+                <h2><?php echo htmlspecialchars($job['judul_pekerjaan']); ?></h2>
+                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['nama_perusahaan']); ?></p>
+                <p><i class='bx bxs-map-pin'>&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['alamat_perusahaan']); ?></p>
+                <p><i class='bx bx-dollar'>&ThickSpace; &ThickSpace;</i>Rp <?= number_format($job['gaji_minimum'], 0, ',', '.') ?> - <?= number_format($job['gaji_maksimum'], 0, ',', '.') ?> / Bulan</p>
+                <p><i class='bx bx-buildings'>&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['kategori']); ?></p>
+                <p><i class='bx bx-time'>&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['jenis_pekerjaan']); ?></p>
+                <p><i class='bx bx-calendar'>&ThickSpace; &ThickSpace;</i>Tayang sejak: <?php echo date('d F Y', strtotime($job['tanggal_uploud'])); ?></p>
+            </section>            <div class="OpsiDaftar">
                 <div class="Lamaran">
-                    <a href="halamanPengajuan.php">Lamar Pekerjaan</a>
+                    <a href="halamanPengajuan.php?id=<?php echo $job['id_pekerjaan']; ?>">Lamar Pekerjaan</a>
                 </div>
                 <div class="Share">
                     <a href="#"><i class='bx bxs-share-alt'>&ThickSpace;</i>Share</a>

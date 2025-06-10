@@ -8,6 +8,19 @@ if (!isset($_SESSION['user_id'])) {
 exit;
 }
 
+if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
+    $user_sql = "SELECT email FROM users WHERE id_users = ?";
+    $user_stmt = $conn->prepare($user_sql);
+    $user_stmt->bind_param("i", $_SESSION['user_id']);
+    $user_stmt->execute();
+    $user_result = $user_stmt->get_result();
+    
+    if ($user_result->num_rows > 0) {
+        $user_data = $user_result->fetch_assoc();
+        $_SESSION['email'] = $user_data['email'];
+    }
+}
+
 $keyword = $_GET['keyword'] ?? '';
 $alamat = $_GET['alamat'] ?? '';
 $kategori = $_GET['kategori'] ?? '';
@@ -15,7 +28,7 @@ $jenis = $_GET['jenis'] ?? '';
 $gaji_min = $_GET['gaji_minimum'] ?? '';
 $gaji_max = $_GET['gaji_maksimum'] ?? '';
 
-$sql = "SELECT pekerjaan.judul_pekerjaan, pekerjaan.kategori, pekerjaan.gaji_minimum, pekerjaan.gaji_maksimum, pekerjaan.jenis_pekerjaan, perusahaan.nama_perusahaan, perusahaan.logo_path, perusahaan.alamat FROM pekerjaan JOIN perusahaan ON pekerjaan.id_perusahaan = perusahaan.id_perusahaan WHERE pekerjaan.tanggal_deadline > CURDATE()";
+$sql = "SELECT pekerjaan.id_pekerjaan, pekerjaan.judul_pekerjaan, pekerjaan.kategori, pekerjaan.gaji_minimum, pekerjaan.gaji_maksimum, pekerjaan.jenis_pekerjaan, perusahaan.nama_perusahaan, perusahaan.logo_path, perusahaan.alamat FROM pekerjaan JOIN perusahaan ON pekerjaan.id_perusahaan = perusahaan.id_perusahaan WHERE pekerjaan.tanggal_deadline > CURDATE()";
 
 // Filter pencarian
 if (!empty($keyword)) {
@@ -63,10 +76,14 @@ $result = mysqli_query($conn, $sql);
         <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
-        </h1>
-        <nav>
-            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+        </h1>        <nav>
+            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($_SESSION['email']); ?></span>
+                <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
+            <?php else: ?>
+                <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+                <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
+            <?php endif; ?>
         </nav>
     </header>
 
@@ -123,9 +140,8 @@ $result = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($result);
                         if ($count > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                            <li class="job-card">
-                                <a href="halamanDetail.php">
+                            ?>                            <li class="job-card">
+                                <a href="halamanDetail.php?id=<?= htmlspecialchars($row['id_pekerjaan']) ?>">
                                     <div>
                                         <img src="<?= htmlspecialchars($row['logo_path']) ?>" alt="<?= htmlspecialchars($row['nama_perusahaan']) ?>">
                                     </div>
