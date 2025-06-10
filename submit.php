@@ -2,11 +2,13 @@
 session_start();
 include 'koneksi.php';
 
+// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: halamanLogin.php');
     exit;
 }
 
+// Get email if not set in session
 if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
     $user_sql = "SELECT email FROM users WHERE id_users = ?";
     $user_stmt = $conn->prepare($user_sql);
@@ -23,10 +25,12 @@ if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
 $form_submitted = false;
 $success = false;
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_submitted = true;
 
     
+    // Get form data
     $id_pekerjaan = (int)$_POST['id_pekerjaan'];
     $id_users = $_SESSION['user_id'];
     $nama_lengkap = trim($_POST['nama_lengkap']);
@@ -34,21 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $no_telepon = trim($_POST['no_telepon']);
 
+    // Validate required fields
     if (empty($nama_lengkap) || empty($tanggal_lahir) || empty($email) || empty($no_telepon)) {
         echo "<script>alert('Semua field wajib harus diisi!'); window.history.back();</script>";
         exit;
     }
 
+    // Validate CV file (required)
     if (!isset($_FILES['cv']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
         echo "<script>alert('File CV wajib diupload!'); window.history.back();</script>";
         exit;
     }
 
+    // Create uploads directory if it doesn't exist
     $upload_dir = 'uploads/';
     if (!file_exists($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
 
+    // Function to handle file upload
     function uploadFile($file, $field_name, $upload_dir) {
         if (!isset($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
             return ''; // Optional file not uploaded
@@ -58,12 +66,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Error uploading $field_name file");
         }
         
+        // Check file size (max 5MB)
         if ($file['size'] > 5 * 1024 * 1024) {
             throw new Exception("$field_name file size must be less than 5MB");
         }
         
+        // Get file extension
         $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         
+        // Validate file types based on field
     
             $allowed_extensions = [];
         switch ($field_name) {
@@ -82,9 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("$field_name file type not allowed. Allowed: " . implode(', ', $allowed_extensions));
         }
         
+        // Generate unique filename
         $new_filename = uniqid() . '_' . time() . '.' . $file_extension;
         $target_path = $upload_dir . $new_filename;
         
+        // Move uploaded file
         if (!move_uploaded_file($file['tmp_name'], $target_path)) {
             throw new Exception("Failed to upload $field_name file");
         }
@@ -93,10 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
+        // Upload files
         $cv_path = uploadFile($_FILES['cv'], 'CV', $upload_dir);
         $portofolio_path = uploadFile($_FILES['portofolio'], 'Portofolio', $upload_dir);
         $lamaran_path = uploadFile($_FILES['surat_lamaran'], 'Surat Lamaran', $upload_dir);
         
+        // Insert application data into database
         $sql = "INSERT INTO lamaran (id_pekerjaan, id_users, nama_lengkap, tanggal_lahir, email, no_telepon, cv_path, portofolio_path, lamaran_path) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -104,12 +119,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iisssssss", $id_pekerjaan, $id_users, $nama_lengkap, $tanggal_lahir, $email, $no_telepon, $cv_path, $portofolio_path, $lamaran_path);
         
         if ($stmt->execute()) {
+            // Success
             $success = true;
         } else {
             throw new Exception("Database error: " . $stmt->error);
         }
         
     } catch (Exception $e) {
+        // Error occurred - clean up uploaded files and show error
         if (isset($cv_path) && file_exists($cv_path)) {
             unlink($cv_path);
         }
