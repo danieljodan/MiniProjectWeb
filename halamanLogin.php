@@ -65,16 +65,22 @@
             $_SESSION['role'] = $user['role'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['logged_in'] = true;
-
-            // Redirect ke halaman utama
-            echo "<script>
-            alert('Login Berhasil!');
-            window.location.href = 'halamanUtama.php';
-            </script>";
+            
+            // Redirect berdasarkan role user
+            if ($user['role'] === 'company') {
+                echo "<script>
+                alert('Login Berhasil! Selamat datang di Dashboard Perusahaan');
+                window.location.href = 'halamanPengelolaanLowongan.php';
+                </script>";
+            } else {
+                echo "<script>
+                alert('Login Berhasil!');
+                window.location.href = 'halamanUtama.php';
+                </script>";
+            }
+            
         } else {
-            echo "<script>
-                document.getElementById('keteranganID').innerHTML = 'Email atau Kata Sandi Salah!';
-            </script>";
+            echo "<script>document.getElementById('keteranganID').innerHTML = 'Email atau Kata Sandi Salah!';</script>";
         }
     }
 ?>

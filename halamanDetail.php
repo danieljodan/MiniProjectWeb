@@ -7,6 +7,13 @@
         exit;
     }
 
+    // Redirect jika user bukan perusahaan
+    $role = $_SESSION['role'];
+    if ($role == 'company') {
+        header('Location: halamanPengelolaanLowongan.php');
+        exit;
+    }
+
     // Ambil data dari URL dan cek jika ID tidak ditemukan
     if (isset($_GET['id'])) {
         $id = (int) $_GET['id']; 

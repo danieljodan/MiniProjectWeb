@@ -179,6 +179,7 @@ body {
 .form .input-box {
     width: 100%;
     margin-top: 20px;
+    
 }
 
 /* buat ngasih shadow dibawah box waktu di klik */
@@ -201,6 +202,7 @@ body {
     width: 100%;
     outline: none;
     border: 1px solid #ccc;
+    align-content: center;
 }
 
 .container .form {

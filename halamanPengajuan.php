@@ -20,6 +20,13 @@ if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
     }
 }
 
+// Redirect jika user bukan perusahaan
+$role = $_SESSION['role'];
+if ($role == 'company') {
+    header('Location: halamanPengelolaanLowongan.php');
+    exit;
+}
+
 $id_pekerjaan = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 
 $sql = "SELECT p.*, pr.nama_perusahaan, pr.logo_path
