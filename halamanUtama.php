@@ -84,26 +84,26 @@ $result = mysqli_query($conn, $sql);
                         </select>
                         <select name="jenis">
                             <option value="" disabled selected>Jenis Pekerjaan</option>
-                            <option value="">Full-time</option>
-                            <option value="">Part-time</option>
-                            <option value="">Remote</option>
-                            <option value="">Freelance</option>
+                            <option value="Full Time">Full-time</option>
+                            <option value="Part Time">Part-time</option>
+                            <option value="Remote">Remote</option>
+                            <option value="Freelance">Freelance</option>
                         </select>
                         <select name="gaji_minimum" id="">
-                            <option label="Gaji Rp 0">0</option>
-                            <option value="">2 juta</option>
-                            <option value="">4 juta</option>
-                            <option value="">6 juta</option>
-                            <option value="">8 juta</option>
-                            <option value="">10 juta</option>
+                            <option label="Gaji Rp 0" value="0">0</option>
+                            <option value="2000000">2 juta</option>
+                            <option value="4000000">4 juta</option>
+                            <option value="6000000">6 juta</option>
+                            <option value="8000000">8 juta</option>
+                            <option value="10000000">10 juta</option>
                         </select>
                         <select name="gaji_maksimum" id="">
                             <option label="hingga Rp 10 juta"> 0</option>
-                            <option value="">2 juta</option>
-                            <option value="">4 juta</option>
-                            <option value="">6 juta</option>
-                            <option value="">8 juta</option>
-                            <option value="">10 juta</option>
+                            <option value="2000000">2 juta</option>
+                            <option value="4000000">4 juta</option>
+                            <option value="6000000">6 juta</option>
+                            <option value="8000000">8 juta</option>
+                            <option value="10000000">10 juta</option>
                         </select>
                     </div>
                     
