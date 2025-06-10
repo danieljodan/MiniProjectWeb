@@ -116,13 +116,13 @@ if ($result->num_rows > 0) {
                 </div>                <div class="input-box">
                     <label for="cv">CV</label>
                     <input id="cv" name="cv" type="file" accept=".pdf,.docx" />
-                    <p id="format_file">Format file yang diterima: PDF/DOCX (maksimal 5MB)</p>
+                    <p id="format_file">Format file yang diterima: pdf, docx (maksimal 5MB)</p>
                     <p id="cv-error" class="file-error"></p>
                 </div>
                 <div class="input-box">
                     <label for="portofolio">Portofolio <span id="Opsional"> (Opsional) </span></label>
                     <input id="portofolio" name="portofolio" type="file" accept=".pdf" />
-                    <p id="format_file">Format file yang diterima: PDF (maksimal 5MB)</p>
+                    <p id="format_file">Format file yang diterima: pdf (maksimal 5MB)</p>
                     <p id="portofolio-error" class="file-error"></p>
                 </div>
                 <div class="input-box">
