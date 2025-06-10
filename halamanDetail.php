@@ -1,43 +1,31 @@
 <?php
+    require_once "koneksi.php";
     session_start();
+
     if (!isset($_SESSION['user_id'])) {
         header('Location: halamanLogin.php');
-    exit;
-    }
-    
-    include 'koneksi.php';
-    
-    if (!isset($_SESSION['email']) && isset($_SESSION['user_id'])) {
-        $user_sql = "SELECT email FROM users WHERE id_users = ?";
-        $user_stmt = $conn->prepare($user_sql);
-        $user_stmt->bind_param("i", $_SESSION['user_id']);
-        $user_stmt->execute();
-        $user_result = $user_stmt->get_result();
-        
-        if ($user_result->num_rows > 0) {
-            $user_data = $user_result->fetch_assoc();
-            $_SESSION['email'] = $user_data['email'];
-        }
-    }
-    
-    $id_pekerjaan = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-    
-    $sql = "SELECT p.*, pr.nama_perusahaan, pr.logo_path, pr.alamat as alamat_perusahaan 
-            FROM pekerjaan p 
-            JOIN perusahaan pr ON p.id_perusahaan = pr.id_perusahaan 
-            WHERE p.id_pekerjaan = ?";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_pekerjaan);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        $job = $result->fetch_assoc();
-    } else {
-        echo "Pekerjaan tidak ditemukan!";
         exit;
     }
+
+    // Ambil data dari URL dan cek jika ID tidak ditemukan
+    if (isset($_GET['id'])) {
+        $id = (int) $_GET['id']; 
+    } else {
+        null;
+    }
+
+    //Ambil data dari DB
+    $sql = "SELECT p.*, c.nama_perusahaan, c.logo_path, c.alamat FROM pekerjaan p INNER JOIN perusahaan c ON p.id_perusahaan = c.id_perusahaan
+            WHERE p.id_pekerjaan = $id";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) === 0) {
+        echo "Lowongan tidak ditemukan";
+        exit;
+    }
+    $job = mysqli_fetch_assoc($result);
+
+    // Menampilkan detail pekerjaan
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +33,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahabat Karier | <?php echo htmlspecialchars($job['judul_pekerjaan']); ?></title>
+    <title>Sahabat Karier | <?php echo $job['judul_pekerjaan']; ?></title>
     <link href="styleDetailPekerjaan.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -54,67 +42,61 @@
         <a href ="halamanUtama.php"><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></a>
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
-        </h1>        <nav>
-            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
-                <?php 
-                    $username = explode('@', $_SESSION['email'])[0];
-                ?>
-                <span style="color: white; margin-right: 1em;">Selamat datang, <?php echo htmlspecialchars($username); ?></span>
-                <a id="Logout" href="logout.php"><i class='bx bx-log-out'></i>&ThickSpace;Logout</a>
-            <?php else: ?>
-                <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
-                <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
-            <?php endif; ?>
+        </h1>
+        <nav>
+            <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
+            <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
     <main>
-        <div class="shadow">            <section class="ProfilPerusahaan">
-                <img src="<?php echo htmlspecialchars($job['logo_path']); ?>" alt="<?php echo htmlspecialchars($job['nama_perusahaan']); ?>" width="100px">
-                <h2><?php echo htmlspecialchars($job['judul_pekerjaan']); ?></h2>
-                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['nama_perusahaan']); ?></p>
-                <p><i class='bx bxs-map-pin'>&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['alamat_perusahaan']); ?></p>
-                <p><i class='bx bx-dollar'>&ThickSpace; &ThickSpace;</i>Rp <?= number_format($job['gaji_minimum'], 0, ',', '.') ?> - <?= number_format($job['gaji_maksimum'], 0, ',', '.') ?> / Bulan</p>
-                <p><i class='bx bx-buildings'>&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['kategori']); ?></p>
-                <p><i class='bx bx-time'>&ThickSpace; &ThickSpace;</i><?php echo htmlspecialchars($job['jenis_pekerjaan']); ?></p>
+        <div class="shadow">
+            <section class="ProfilPerusahaan">
+                <img src=<?php echo $job['logo_path']; ?> alt="PTEshaParama" width="100px">
+                <h2><?php echo $job['judul_pekerjaan']; ?></h2>
+                <p><i class='bx bx-check-shield' style="color: green">&ThickSpace; &ThickSpace;</i><?php echo $job['nama_perusahaan']; ?></p>
+                <p><i class='bx bxs-map-pin'>&ThickSpace; &ThickSpace;</i><?php echo $job['alamat']; ?></p>
+                <p><i class='bx bx-dollar'>&ThickSpace; &ThickSpace;</i><?php echo number_format($job['gaji_minimum'], 0, ',', '.'); ?> – <?php echo number_format($job['gaji_maksimum'], 0, ',', '.'); ?> / Bulan</p>
+                <p><i class='bx bx-buildings'>&ThickSpace; &ThickSpace;</i><?php echo $job['kategori']; ?></p>
+                <p><i class='bx bx-time'>&ThickSpace; &ThickSpace;</i><?php echo $job['jenis_pekerjaan']; ?></p>
                 <p><i class='bx bx-calendar'>&ThickSpace; &ThickSpace;</i>Tayang sejak: <?php echo date('d F Y', strtotime($job['tanggal_uploud'])); ?></p>
-            </section>            <div class="OpsiDaftar">
+            </section>
+            <div class="OpsiDaftar">
                 <div class="Lamaran">
                     <a href="halamanPengajuan.php?id=<?php echo $job['id_pekerjaan']; ?>">Lamar Pekerjaan</a>
-                </div>
-                <div class="Share">
-                    <a href="#"><i class='bx bxs-share-alt'>&ThickSpace;</i>Share</a>
                 </div>
             </div>
         </div>
         <section class="DeskripsiPekerjaan">
             <h3>Deskripsi Pekerjaan</h3>
-            <ul>
-                <li>Monitor customer network infrastructure</li>
-                <li>Identify issues and errors before or as they occur</li>
-                <li>Ensure normal day-to-day operations</li>
-                <li>Report customer infrastructure conditions to Managers and customers.</li>
-                <li>Collaborate with multi-functional teams to implement security controls and improve security posture</li>
-                <li>Collect and analyze feedback from customer SOPs for periodic improvement</li>
-                <li>Monitor and manage various firewalls</li>
-                <li>Monitor firewall logs and respond to security incidents</li>
-                <li>Remediate firewall vulnerabilities</li>
-                <li>Implement firewall security policies and rules</li>
-                <li>Provide support and guidance for secure endpoint use</li>
-                <li>Collaborate with department heads and subject matter experts to gather information and insights for SOP development</li>
-                <li>Responsible for SLAs provided by customers and other related tasks</li>
-            </ul>
+            <p>
+                <ul>
+                <?php
+                // pecah string deskripsi jadi array kalimat
+                    $sentences = explode('.', $job['deskripsi']);
+                    foreach ($sentences as $sentence) {
+                        $s = trim($sentence);
+                        if ($s !== '') {
+                            echo '<li>' . $s . '</li>';
+                        }
+                    }
+                ?>
+                </ul>    
+            </p>
             <h3>Syarat dan Kualifikasi</h3>
-            <ul>
-                <li>Experience in implementing Fortinet, Palo Alto, CheckPoint, Juniper, or Huawei firewalls</li>
-                <li>Understand the concept and operation of NGFW, IDS, IPS, Anti-DDoS, Sandboxing, VPN, and Security Management.</li>
-                <li>Must have Associate level certification in NGFW, such as (PCNSA/FCA/FCP/HCIA Security/JNCIA Security/CCSA) are a plus.</li>
-                <li>Excellent communication skills and ability to work well in a team</li>
-                <li>Strong analytical and problem-solving skills with attention to detail</li>
-                <li>Willing to be placed at the client's location in the Jakarta area with a shifting schedule</li>
-                <li>Willing to be contracted for the duration of the project.</li>
-                <li>Experience: minimum 2 (two) years of experience as a Network and Security Engineer.</li>
-                <li>Bachelor's or Master's degree in Computer Science, Information Technology, or related field</li>
-            </ul>
+            <p>
+                <ul>
+                <?php
+                // pecah string Syarat dan Kualifikasi jadi array kalimat
+                    $sentences = explode('.', $job['deskripsi']);
+                    foreach ($sentences as $sentence) {
+                        $s = trim($sentence);
+                        if ($s !== '') {
+                            echo '<li>' . $s . '</li>';
+                        }
+                    }
+                ?>
+                </ul>  
+            </p>
         </section>
         <section class="Tips">
             <h4>Tips Aman Cari Kerja!</h4>
@@ -126,55 +108,30 @@
         <div class="LowonganLainnya">
             <section class="job-list">
                 <ul>
+                    <?php
+                        $sqlAside = "SELECT p.id_pekerjaan, p.judul_pekerjaan, c.nama_perusahaan, c.alamat, c.logo_path, p.kategori, p.jenis_pekerjaan
+                        FROM pekerjaan p INNER JOIN perusahaan c ON p.id_perusahaan = c.id_perusahaan
+                        WHERE p.id_pekerjaan <> {$id} AND p.kategori = '{$job['kategori']}' ORDER BY RAND() LIMIT 3";
+                        $rsAside = mysqli_query($conn, $sqlAside);
+                        while ($o = mysqli_fetch_assoc($rsAside)):
+                    ?>
                     <li class="job-card">
-                        <a href="halamanDetailAside.php">
+                        <a href="halamanDetail.php?id=<?php echo $o['id_pekerjaan']; ?>">
                             <div>
-                                <img src="image/Logo_TechTiera.jpg" alt="Esha Parama Technology">
+                                <img src="<?php echo $o['logo_path']; ?>" alt="<?php echo $o['nama_perusahaan']; ?>">
                             </div>
                             <div>
-                                <h3>Cyber Security Consultant</h3>
-                                <h4 class="perusahaan-loker">PT TechTiera Services Indonesia</h3>
-                                <p class="lokasi-loker">Jakarta Selatan, DKI Jakarta</p>
+                                <h3><?php echo $o['judul_pekerjaan']; ?></h3>
+                                <h4 class="perusahaan-loker"><?php echo $o['nama_perusahaan']; ?></h3>
+                                <p class="lokasi-loker"><?php echo $o['alamat']; ?></p>
                                 <div class="info-pekerjaan">
-                                    <p class="badge badge-kategori">Teknologi Informasi</p>
-                                    <p class="badge badge-jenis">Penuh Waktu</p>
+                                    <p class="badge badge-kategori"><?php echo $o['kategori']; ?></p>
+                                    <p class="badge badge-jenis"><?php echo $o['jenis_pekerjaan']; ?></p>
                                 </div> 
                             </div>
                         </a>
                     </li>
-                    <li class="job-card">
-                        <a href="halamanDetailAside.php">
-                            <div>
-                                <img src="image/GaneshaOperationAbianbase.webp" alt="GaneshaOperation">
-                            </div>
-                            <div>
-                                <h3>Pengajar Informatika</h3>
-                                <h4 class="perusahaan-loker">Ganesha Operation Abianbase</h3>
-                                <p class="lokasi-loker">Mengwi, Bali</p>
-                                <div class="info-pekerjaan">
-                                    <p class="badge badge-kategori">Pendidikan</p>
-                                    <p class="badge badge-jenis">Paruh Waktu</p>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                    <li class="job-card">
-                        <a href="halamanDetailAside.php">
-                            <div>
-                                <img src="image/YayasanEnamPeduliPendidikan.webp" alt="YayasanEnamPeduliPendidikan">
-                            </div>
-                            <div>
-                                <h3>Dosen Perguruan Tinggi</h3>
-                                <h4 class="perusahaan-loker">Yayasan Enam Peduli Pendidikan</h3>
-                                <p class="lokasi-loker">Cibitung, Jawa Barat</p>
-                                <div class="info-pekerjaan">
-                                    <p class="badge badge-kategori">Pendidikan</p>
-                                    <p class="badge badge-jenis">Penuh Waktu</p>
-                                </div> 
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                    <?php endwhile; ?>
             </section>
         </div>
     </aside>
