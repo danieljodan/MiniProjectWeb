@@ -67,7 +67,7 @@ if ($result->num_rows > 0) {
         <h1>
             <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
-        <nav>            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+        <nav>   <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
                 <?php 
                     $username = explode('@', $_SESSION['email'])[0];
                 ?>

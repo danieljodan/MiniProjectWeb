@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
         </h1>
         <nav>
             <a id="Dashboard" href="halamanDashboard.php" style="display: inline;"><i class='bx bx-home-alt-2'>&ThickSpace;</i>Dashboard</a>
-            <a id="Logout" href="halamanLogin.php" style="display: inline;"><i class='bx bx-log-out'>&ThickSpace;</i>Logout</a>
+            <a id="Logout" href="logout.php" style="display: inline;"><i class='bx bx-log-out'>&ThickSpace;</i>Logout</a>
             <!-- <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
             <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a> -->
         </nav>

@@ -7,7 +7,7 @@
         exit;
     }
 
-    // Redirect jika user bukan perusahaan
+    // Redirect jika user bukan pencari kerja
     $role = $_SESSION['role'];
     if ($role == 'company') {
         header('Location: halamanPengelolaanLowongan.php');
@@ -18,7 +18,7 @@
     if (isset($_GET['id'])) {
         $id = (int) $_GET['id']; 
     } else {
-        null;
+        $id = 0;
     }
 
     //Ambil data dari DB
@@ -26,7 +26,9 @@
             WHERE p.id_pekerjaan = $id";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) === 0) {
-        echo "Lowongan tidak ditemukan";
+        echo "<script>alert('Lowongan Tidak Ditemukan');
+        window.location.href = 'halamanUtama.php';
+        </script>";
         exit;
     }
     $job = mysqli_fetch_assoc($result);
@@ -52,7 +54,7 @@
         </h1>
         <nav>
             <a id="Dashboard" href="halamanDashboard.php" style="display: none;"><i class='bx bx-home-alt-2'>&ThickSpace;</i>Dashboard</a>
-            <a id="Logout" href="halamanLogin.php" style="display: none;"><i class='bx bx-log-out'>&ThickSpace;</i>Logout</a>
+            <a id="Logout" href="logout.php" style="display: none;"><i class='bx bx-log-out'>&ThickSpace;</i>Logout</a>
             <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
             <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
