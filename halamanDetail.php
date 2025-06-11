@@ -88,9 +88,27 @@
                 <p><i class='bx bx-time'>&ThickSpace; &ThickSpace;</i><?php echo $job['jenis_pekerjaan']; ?></p>
                 <p><i class='bx bx-calendar'>&ThickSpace; &ThickSpace;</i>Tayang sejak: <?php echo date('d F Y', strtotime($job['tanggal_uploud'])); ?></p>
             </section>
+            <?php
+                // Cek apakah user sudah melamar lowongan ini
+                $userId     = $_SESSION['user_id'];
+                $cekLamaran = mysqli_query(
+                    $conn,
+                    "SELECT id_lamaran 
+                    FROM lamaran 
+                    WHERE id_pekerjaan = {$id} 
+                    AND id_users     = {$userId}"
+                );
+                $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
+            ?>
             <div class="OpsiDaftar">
                 <div class="Lamaran">
-                    <a href="halamanPengajuan.php?id=<?php echo $job['id_pekerjaan']; ?>">Lamar Pekerjaan</a>
+                    <?php if ($sudahMelamar): ?>
+                        <span style="color:red;">Anda sudah pernah melamar lowongan ini</span>
+                    <?php else: ?>
+                        <a href="halamanPengajuan.php?id=<?php echo $job['id_pekerjaan']; ?>">
+                            Lamar Pekerjaan
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
