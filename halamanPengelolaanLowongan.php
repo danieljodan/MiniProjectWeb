@@ -2,6 +2,11 @@
 session_start();
 include 'koneksi.php';
 
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 // Check if user is logged in and is a company
 if (!isset($_SESSION['user_id'])) {
     header('Location: halamanLogin.php');
@@ -56,6 +61,12 @@ $message = '';
 $message_type = '';
 $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
+// Handle message from redirect
+if (isset($_GET['message']) && isset($_GET['type'])) {
+    $message = $_GET['message'];
+    $message_type = $_GET['type'];
+}
+
 // Handle create company profile
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_profile'])) {
     $nama_perusahaan = trim($_POST['nama_perusahaan']);
@@ -107,21 +118,26 @@ if (isset($_GET['delete_job'])) {
         $applicant_stmt->execute();
         $applicant_result = $applicant_stmt->get_result();
         $applicant_count = $applicant_result->fetch_assoc()['count'];
-        
-        if ($applicant_count > 0) {
+          if ($applicant_count > 0) {
             $message = "Tidak dapat menghapus lowongan yang sudah memiliki pelamar.";
             $message_type = "error";
+            header("Location: ?page=jobs&message=" . urlencode($message) . "&type=error");
+            exit;
         } else {
             $delete_sql = "DELETE FROM pekerjaan WHERE id_pekerjaan = ?";
             $delete_stmt = $conn->prepare($delete_sql);
             $delete_stmt->bind_param("i", $job_id);
-            
-            if ($delete_stmt->execute()) {
+              if ($delete_stmt->execute()) {
                 $message = "Lowongan berhasil dihapus.";
                 $message_type = "success";
+                // Redirect to jobs page to show updated list
+                header("Location: ?page=jobs&message=" . urlencode($message) . "&type=success");
+                exit;
             } else {
                 $message = "Gagal menghapus lowongan.";
                 $message_type = "error";
+                header("Location: ?page=jobs&message=" . urlencode($message) . "&type=error");
+                exit;
             }
         }
     }
@@ -142,10 +158,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_job'])) {
         $add_sql = "INSERT INTO pekerjaan (id_perusahaan, judul_pekerjaan, kategori, gaji_minimum, gaji_maksimum, jenis_pekerjaan, deskripsi, syarat_kualifikasi, tanggal_deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $add_stmt = $conn->prepare($add_sql);
         $add_stmt->bind_param("issiissss", $company_id, $judul_pekerjaan, $kategori, $gaji_minimum, $gaji_maksimum, $jenis_pekerjaan, $deskripsi, $syarat_kualifikasi, $tanggal_deadline);
-        
-        if ($add_stmt->execute()) {
+          if ($add_stmt->execute()) {
             $message = "Lowongan baru berhasil ditambahkan.";
             $message_type = "success";
+            // Redirect to jobs page to show updated list
+            header("Location: ?page=jobs&message=" . urlencode($message) . "&type=success");
+            exit;
         } else {
             $message = "Gagal menambahkan lowongan.";
             $message_type = "error";
@@ -179,10 +197,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_job'])) {
         $edit_sql = "UPDATE pekerjaan SET judul_pekerjaan = ?, kategori = ?, gaji_minimum = ?, gaji_maksimum = ?, jenis_pekerjaan = ?, deskripsi = ?, syarat_kualifikasi = ?, tanggal_deadline = ? WHERE id_pekerjaan = ?";
         $edit_stmt = $conn->prepare($edit_sql);
         $edit_stmt->bind_param("ssiissssi", $judul_pekerjaan, $kategori, $gaji_minimum, $gaji_maksimum, $jenis_pekerjaan, $deskripsi, $syarat_kualifikasi, $tanggal_deadline, $job_id);
-        
-        if ($edit_stmt->execute()) {
+          if ($edit_stmt->execute()) {
             $message = "Lowongan berhasil diperbarui.";
             $message_type = "success";
+            // Redirect to jobs page to show updated list
+            header("Location: ?page=jobs&message=" . urlencode($message) . "&type=success");
+            exit;
         } else {
             $message = "Gagal memperbarui lowongan.";
             $message_type = "error";
@@ -210,21 +230,8 @@ if ($company_id > 0) {
     $stats = array('total_jobs' => 0, 'total_applications' => 0);
 }
 
-// Get jobs with applicant counts
-if ($company_id > 0) {
-    $jobs_sql = "SELECT p.*, COUNT(l.id_lamaran) as applicant_count 
-    FROM pekerjaan p 
-    LEFT JOIN lamaran l ON p.id_pekerjaan = l.id_pekerjaan 
-    WHERE p.id_perusahaan = ? 
-    GROUP BY p.id_pekerjaan 
-    ORDER BY p.tanggal_uploud DESC";
-    $jobs_stmt = $conn->prepare($jobs_sql);
-    $jobs_stmt->bind_param("i", $company_id);
-    $jobs_stmt->execute();
-    $jobs_result = $jobs_stmt->get_result();
-} else {
-    $jobs_result = null;
-}
+// Initialize jobs result variable
+$jobs_result = null;
 
 // Get specific job data for editing
 $edit_job = null;
@@ -921,14 +928,17 @@ if (isset($_GET['applicant_detail'])) {
                         <h3><?php echo $stats['total_applications']; ?></h3>
                         <p>Total Pelamar</p>
                     </div>
-                </div>
-
-                <h3>Lowongan Terbaru</h3>
+                </div>                <h3>Lowongan Terbaru</h3>
                 <?php 
                 $recent_jobs = $conn->prepare("SELECT p.*, COUNT(l.id_lamaran) as applicant_count FROM pekerjaan p LEFT JOIN lamaran l ON p.id_pekerjaan = l.id_pekerjaan WHERE p.id_perusahaan = ? GROUP BY p.id_pekerjaan ORDER BY p.tanggal_uploud DESC LIMIT 3");
                 $recent_jobs->bind_param("i", $company_id);
                 $recent_jobs->execute();
                 $recent_result = $recent_jobs->get_result();
+                
+                // Debug: Show recent job count
+                $recent_job_count = $recent_result->num_rows;
+                ?>
+                <?php
                 
                 if ($recent_result->num_rows > 0):
                     while ($job = $recent_result->fetch_assoc()):
@@ -939,8 +949,7 @@ if (isset($_GET['applicant_detail'])) {
                             <span><i class='bx bx-category'></i> <?php echo htmlspecialchars($job['kategori']); ?></span>
                             <span><i class='bx bx-time'></i> <?php echo htmlspecialchars($job['jenis_pekerjaan']); ?></span>
                             <span><i class='bx bx-group'></i> <?php echo $job['applicant_count']; ?> Pelamar</span>
-                        </div>
-                        <div class="job-actions">
+                        </div>                        <div class="job-actions">
                             <a href="?job_detail=<?php echo $job['id_pekerjaan']; ?>" class="btn btn-small">Lihat Detail</a>
                         </div>                    </div>
                 <?php 
@@ -949,17 +958,37 @@ if (isset($_GET['applicant_detail'])) {
                 ?>
                     <p>Belum ada lowongan yang dibuat.</p>
                 <?php endif; ?>
-                
-            <?php elseif ($current_page === 'jobs'): ?>
+                  <?php elseif ($current_page === 'jobs'): ?>
                 <h2><i class='bx bx-briefcase'></i> Kelola Lowongan</h2>
                 
                 <?php if ($company_id == 0): ?>
                     <div class="message error">
                         Silakan lengkapi profil perusahaan terlebih dahulu untuk dapat mengelola lowongan.
                         <a href="?page=dashboard" class="btn" style="margin-left: 1rem;">Lengkapi Profil</a>
+                    </div>                <?php else:
+                    // Get jobs with applicant counts - executed here to get fresh data after any operations
+                    $jobs_sql = "SELECT p.*, COUNT(l.id_lamaran) as applicant_count 
+                    FROM pekerjaan p 
+                    LEFT JOIN lamaran l ON p.id_pekerjaan = l.id_pekerjaan 
+                    WHERE p.id_perusahaan = ? 
+                    GROUP BY p.id_pekerjaan 
+                    ORDER BY p.tanggal_uploud DESC";
+                    $jobs_stmt = $conn->prepare($jobs_sql);
+                    $jobs_stmt->bind_param("i", $company_id);
+                    $jobs_stmt->execute();
+                    $jobs_result = $jobs_stmt->get_result();
+                    
+                    // Debug: Show job count
+                    $job_count = $jobs_result->num_rows;
+                    ?>
+                    <!-- Debug info (you can remove this later) -->
+                    <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 12px;">
+                        <strong>Debug Info:</strong> Company ID: <?php echo $company_id; ?>, Jobs Found: <?php echo $job_count; ?>
                     </div>
-                <?php elseif ($jobs_result && $jobs_result->num_rows > 0): ?>
-                    <?php while ($job = $jobs_result->fetch_assoc()): ?>
+                    <?php
+                    
+                    if ($jobs_result && $jobs_result->num_rows > 0) {
+                        while ($job = $jobs_result->fetch_assoc()) { ?>
                         <div class="job-card">
                             <h3><?php echo htmlspecialchars($job['judul_pekerjaan']); ?></h3>
                             <div class="job-meta">
@@ -973,11 +1002,13 @@ if (isset($_GET['applicant_detail'])) {
                                 <a href="?job_detail=<?php echo $job['id_pekerjaan']; ?>" class="btn btn-small">Lihat Detail</a>
                                 <a href="?edit_job=<?php echo $job['id_pekerjaan']; ?>" class="btn btn-small">Edit</a>
                                 <a href="?delete_job=<?php echo $job['id_pekerjaan']; ?>" class="btn btn-danger btn-small" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">Hapus</a>
-                            </div>                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p>Belum ada lowongan yang dibuat. <a href="?page=add_job" class="btn">Tambah Lowongan Pertama</a></p>
-                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php }
+                    } else { ?>
+                        <p>Belum ada lowongan yang dibuat. <a href="?page=add_job" class="btn">Tambah Lowongan Pertama</a></p>
+                    <?php }
+                endif; ?>
                 
             <?php elseif ($current_page === 'add_job'): ?>
                 <h2><i class='bx bx-plus'></i> Tambah Lowongan Baru</h2>
