@@ -2,18 +2,18 @@
 session_start();
 include 'koneksi.php';
 
-// Prevent caching
+// Memaksa untuk selalu mengambil halaman terbaru
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-// Check if user is logged in and is a company
+// Cek apakah user sudah login
 if (!isset($_SESSION['user_id'])) {
     header('Location: halamanLogin.php');
     exit;
 }
 
-// Get user role
+// Mengambil user role
 $user_sql = "SELECT email, role FROM users WHERE id_users = ?";
 $user_stmt = $conn->prepare($user_sql);
 $user_stmt->bind_param("i", $_SESSION['user_id']);
@@ -33,7 +33,7 @@ if ($user_result->num_rows > 0) {
     exit;
 }
 
-// Get company data
+// Mengambil data company
 $company_sql = "SELECT * FROM perusahaan WHERE id_users = ?";
 $company_stmt = $conn->prepare($company_sql);
 $company_stmt->bind_param("i", $_SESSION['user_id']);
@@ -45,7 +45,7 @@ if ($company_result->num_rows > 0) {
     $company_id = $company['id_perusahaan'];
     $show_profile_form = false;
 } else {
-    // If company profile doesn't exist, show profile creation form
+    // Kalau tidak ada company profile alihkan ke halaman form profile
     $company = array(
         'id_perusahaan' => 0,
         'nama_perusahaan' => '',
@@ -56,12 +56,12 @@ if ($company_result->num_rows > 0) {
     $show_profile_form = true;
 }
 
-// Handle form submissions
+// Initialize
 $message = '';
 $message_type = '';
 $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
-// Handle message from redirect
+// Handle message
 if (isset($_GET['message']) && isset($_GET['type'])) {
     $message = $_GET['message'];
     $message_type = $_GET['type'];
@@ -99,11 +99,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_profile'])) {
     }
 }
 
-// Handle delete job
+// Delete job
 if (isset($_GET['delete_job'])) {
     $job_id = (int)$_GET['delete_job'];
     
-    // Check if job belongs to this company
+    // Check apakah job milik company
     $check_sql = "SELECT id_pekerjaan FROM pekerjaan WHERE id_pekerjaan = ? AND id_perusahaan = ?";
     $check_stmt = $conn->prepare($check_sql);
     $check_stmt->bind_param("ii", $job_id, $company_id);
@@ -111,7 +111,7 @@ if (isset($_GET['delete_job'])) {
     $check_result = $check_stmt->get_result();
     
     if ($check_result->num_rows > 0) {
-        // Check if job has applicants
+        // Check job apakah ada pelamar
         $applicant_sql = "SELECT COUNT(*) as count FROM lamaran WHERE id_pekerjaan = ?";
         $applicant_stmt = $conn->prepare($applicant_sql);
         $applicant_stmt->bind_param("i", $job_id);
@@ -143,7 +143,7 @@ if (isset($_GET['delete_job'])) {
     }
 }
 
-// Handle add job
+// Handle menambah job
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_job'])) {
     $judul_pekerjaan = trim($_POST['judul_pekerjaan']);
     $kategori = trim($_POST['kategori']);
@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_job'])) {
     }
 }
 
-// Handle edit job
+// Edit job yang dimiliki company
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_job'])) {
     $job_id = (int)$_POST['job_id'];
     $judul_pekerjaan = trim($_POST['judul_pekerjaan']);
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_job'])) {
     $syarat_kualifikasi = trim($_POST['syarat_kualifikasi']);
     $tanggal_deadline = $_POST['tanggal_deadline'];
     
-    // Check if job belongs to this company
+    // Check apakah job benar milik company
     $check_sql = "SELECT id_pekerjaan FROM pekerjaan WHERE id_pekerjaan = ? AND id_perusahaan = ?";
     $check_stmt = $conn->prepare($check_sql);
     $check_stmt->bind_param("ii", $job_id, $company_id);
@@ -213,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_job'])) {
     }
 }
 
-// Get dashboard statistics
+// Dashboard Statistics
 if ($company_id > 0) {
     $stats_sql = "SELECT 
         COUNT(p.id_pekerjaan) as total_jobs,
@@ -230,10 +230,10 @@ if ($company_id > 0) {
     $stats = array('total_jobs' => 0, 'total_applications' => 0);
 }
 
-// Initialize jobs result variable
+// Initialize jobs result
 $jobs_result = null;
 
-// Get specific job data for editing
+// Mengambil job untuk di edit
 $edit_job = null;
 if (isset($_GET['edit_job'])) {
     $edit_job_id = (int)$_GET['edit_job'];
@@ -248,7 +248,7 @@ if (isset($_GET['edit_job'])) {
     }
 }
 
-// Get job detail with applicants
+// Mengambil job detail dengan applicants
 $job_detail = null;
 $applicants = [];
 if (isset($_GET['job_detail'])) {
@@ -279,7 +279,7 @@ if (isset($_GET['job_detail'])) {
     }
 }
 
-// Get applicant detail
+// Mengambil applicant detail
 $applicant_detail = null;
 if (isset($_GET['applicant_detail'])) {
     $applicant_id = (int)$_GET['applicant_detail'];
