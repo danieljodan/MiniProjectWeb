@@ -11,7 +11,7 @@ $jenis = $_GET['jenis'] ?? '';
 $gaji_min = $_GET['gaji_minimum'] ?? '';
 $gaji_max = $_GET['gaji_maksimum'] ?? '';
 
-$sql = "SELECT pekerjaan.id_pekerjaan, pekerjaan.judul_pekerjaan, pekerjaan.kategori, pekerjaan.gaji_minimum, pekerjaan.gaji_maksimum, pekerjaan.jenis_pekerjaan, perusahaan.nama_perusahaan, perusahaan.logo_path, perusahaan.alamat FROM pekerjaan JOIN perusahaan ON pekerjaan.id_perusahaan = perusahaan.id_perusahaan WHERE pekerjaan.tanggal_deadline > CURDATE()";
+$sql = "SELECT pekerjaan.id_pekerjaan, pekerjaan.judul_pekerjaan, pekerjaan.kategori, pekerjaan.gaji_minimum, pekerjaan.gaji_maksimum, pekerjaan.jenis_pekerjaan, perusahaan.nama_perusahaan, perusahaan.logo_path, perusahaan.alamat FROM pekerjaan JOIN perusahaan ON pekerjaan.id_perusahaan = perusahaan.id_perusahaan WHERE pekerjaan.tanggal_deadline >= CURDATE()";
 
 // Filter pencarian
 if (!empty($keyword)) {

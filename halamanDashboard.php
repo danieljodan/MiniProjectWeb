@@ -3,11 +3,11 @@ require_once "koneksi.php";
 
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 
-$sql = "SELECT perusahaan.id_perusahaan, perusahaan.nama_perusahaan, perusahaan.logo_path, COUNT(pekerjaan.id_pekerjaan) as total_pekerjaan FROM perusahaan JOIN pekerjaan ON perusahaan.id_perusahaan = pekerjaan.id_perusahaan";
+$sql = "SELECT perusahaan.id_perusahaan, perusahaan.nama_perusahaan, perusahaan.logo_path, COUNT(pekerjaan.id_pekerjaan) as total_pekerjaan FROM perusahaan JOIN pekerjaan ON perusahaan.id_perusahaan = pekerjaan.id_perusahaan WHERE pekerjaan.tanggal_deadline >= CURDATE()";
 
 if (!empty($keyword)) {
     $keyword = mysqli_real_escape_string($conn, $keyword);
-    $sql .= " WHERE perusahaan.nama_perusahaan LIKE '%$keyword%'";
+    $sql .= " AND perusahaan.nama_perusahaan LIKE '%$keyword%'";
 }
 
 $sql .= " GROUP BY perusahaan.id_perusahaan";

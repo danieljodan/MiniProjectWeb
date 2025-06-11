@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $profil = mysqli_fetch_assoc($result_perusahaan);
 
     // Ambil data semua lowongan yang ada di perusahaan dan tampilkan total pelamarnya
-    $sql_semua_lowongan = "SELECT pekerjaan.id_pekerjaan, pekerjaan.judul_pekerjaan, pekerjaan.deskripsi, COUNT(lamaran.id_lamaran) AS total_pelamar FROM pekerjaan LEFT JOIN lamaran ON pekerjaan.id_pekerjaan = lamaran.id_pekerjaan WHERE pekerjaan.id_perusahaan = $id_perusahaan GROUP BY pekerjaan.id_pekerjaan";
+    $sql_semua_lowongan = "SELECT pekerjaan.id_pekerjaan, pekerjaan.judul_pekerjaan, pekerjaan.deskripsi, COUNT(lamaran.id_lamaran) AS total_pelamar FROM pekerjaan LEFT JOIN lamaran ON pekerjaan.id_pekerjaan = lamaran.id_pekerjaan WHERE pekerjaan.id_perusahaan = $id_perusahaan AND pekerjaan.tanggal_deadline >= CURDATE() GROUP BY pekerjaan.id_pekerjaan";
 
     $result_semua_lowongan = mysqli_query($conn, $sql_semua_lowongan);
 } else {
