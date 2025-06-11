@@ -9,6 +9,7 @@
     <script src="halamanRegister.js"></script>
 </head>
 <body>
+    <!-- halaman navigasi -->
     <header>
         <p><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></p>
         <h1>
@@ -24,6 +25,7 @@
             <section class="login">
                 <h2>Masuk</h2>
                 <p>Masuk ke Sahabat Karier Untuk Melanjutkan</p>
+                <!-- Form untuk login -->
                 <form action="halamanLogin.php" method="post">
                     <p><label for="emailID">Alamat Email: </label></p>
                     <p><input type="email" name="email" id="emailID" maxlength="100" required></p>
@@ -48,12 +50,14 @@
 <?php
     require_once "koneksi.php";
 
+    // Membuat session untuk memudahkan pemindahan data antar halaman
     session_start();
     
     $email = $_POST["email"];
     $password = $_POST["password"];
 
     if (isset($_POST["submit"])) {
+        // Mengambil data yang sesuai dengan username dan password
         $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
         $result = mysqli_query($conn, $sql);        
         if (mysqli_num_rows($result) > 0) {

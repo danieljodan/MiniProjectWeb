@@ -9,6 +9,7 @@
     <script src="halamanRegister.js"></script>
 </head>
 <body>
+    <!-- halaman navigasi -->
     <header>
         <p><img id="logoWebsite" src="website_asset/logo_SK.png" alt="Logo SahabatKarier"></p>
         <h1>
@@ -24,6 +25,7 @@
             <section class="register">
                 <h2>Daftar</h2>
                 <p>Silahkan Daftar Untuk Melanjutkan ke SahabatKarier</p>
+                <!-- Form untuk register -->
                 <form action="halamanRegister.php" method="post">
                     <p><label for="emailID">Alamat Email: </label></p>
                     <p><input type="email" name="email" id="emailID" maxlength="100" required></p>
@@ -43,6 +45,7 @@
                     <p><input type="submit" name="submit" value="Daftar" onclick="return konfirmasiEmailPassword()"></p>
                     <p class="login">Sudah punya akun?<a href="halamanLogin.php">Silahkan login!</a></p>
 
+                    <!-- Tempat untuk menampilkan alert -->
                     <p id="keteranganID"></p>
                 </form>
             </section>
