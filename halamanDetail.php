@@ -51,10 +51,29 @@
             <a href="halamanUtama.php">SahabatKarier</a>
         </h1>
         <nav>
+            <a id="Dashboard" href="halamanDashboard.php" style="display: none;"><i class='bx bx-home-alt-2'>&ThickSpace;</i>Dashboard</a>
+            <a id="Logout" href="halamanLogin.php" style="display: none;"><i class='bx bx-log-out'>&ThickSpace;</i>Logout</a>
             <a id="Register" href="halamanRegister.php"><i class='bx bxs-pencil'></i>&ThickSpace;</i>Register</a>
             <a id="Login" href="halamanLogin.php"><i class='bx bxs-user-circle' >&ThickSpace;</i>Login</a>
         </nav>
     </header>
+    <?php
+        if (isset($_SESSION['user_id'])) {
+            $role = $_SESSION['role'];
+            echo "<script>";
+            if ($role === 'jobseeker') {
+                echo "document.getElementById('Dashboard').style.display = 'inline';";
+            }
+
+            // Logout selalu muncul untuk yang login
+            echo "document.getElementById('Logout').style.display = 'inline';";
+
+            // Sembunyikan Register/Login
+            echo "document.getElementById('Register').style.display = 'none';";
+            echo "document.getElementById('Login').style.display = 'none';";
+            echo "</script>";
+            }
+    ?>
     <main>
         <div class="shadow">
             <section class="ProfilPerusahaan">

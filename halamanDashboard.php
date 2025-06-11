@@ -58,7 +58,7 @@ $result = mysqli_query($conn, $sql);
                             while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
                                     <div class="company-card" data-index="<?= $index ?>">
-                                        <a href="profilPerusahaan.php">
+                                        <a href="halamanProfilPerusahaan.php?id=<?= $row['id_perusahaan'] ?>">
                                             <div class="profil-singkat">
                                                 <img src="<?= htmlspecialchars($row['logo_path']) ?>" alt="<?= htmlspecialchars($row['nama_perusahaan']) ?>">
                                                 <h4><?= htmlspecialchars($row['nama_perusahaan']) ?></h4>
